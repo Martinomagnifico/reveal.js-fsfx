@@ -5,7 +5,7 @@ A plugin for [Reveal.js](https://revealjs.com) that enters or exits fullscreen, 
 Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things.  
 
 
-Here's a [demo](https://martinomagnifico.github.io/reveal.js-appearance/demo.html) of a project that uses the fsbutton.js plugin.
+Here's a [demo](https://martinomagnifico.github.io/reveal.js-fsbutton/demo.html) of a project that uses the fsbutton.js plugin.
 
 
 FSButton.js does multiple things:

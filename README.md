@@ -8,7 +8,7 @@ Sometimes you would like to have a button that starts a presentation *and* goes 
 Here's a [demo](https://martinomagnifico.github.io/reveal.js-fsbutton/demo.html) of a project that uses the fsbutton.js plugin.
 
 
-FSButton.js does multiple things:
+fsbutton.js does multiple things:
 * It sets a class for buttons that should switch the browser to fullscreen or exit it.
 * Optional: It allows a fullscreen-button to also let Reveal.js go to the next slide, and set an optional delay for it. 
 * Optional: It looks for elements in the presentation that need to have a class toggled on entering fullscreen and sets that class; it will remove the class on exiting fullscreen. The class can be set per element. Nice for an icon on the fullscreen button itself.

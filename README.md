@@ -55,7 +55,7 @@ Reveal.initialize({
 });
 ```
 
-The option 'hideofnofs' works like this: 
+The option 'hideifnofs' works like this: 
 Any button that should enter or exit fullscreen can do that because it has the baseclass. However, if Screenfull (the script that checks the browser fullscreen capabilities), is either not loaded or decides that the browser does not support fullscreen, a fullscreen button just sits there unable to do anything. So the option 'hideifnofs' hides the button by default. This can be overruled by setting it to false.
 
 A fullscreen button will not be hidden with the above option, if a `data-fs-gonext` attribute (explained below) is set. This means that that button's functionality will fall back to 'next slide' only, if there is no fullscreen support.

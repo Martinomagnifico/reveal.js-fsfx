@@ -28,7 +28,7 @@
       	opacity: 0;
       }
       .icon-fs:after {
-      	content: 'X'
+      	content: '+'
       }
       .icon-fsexit:after {
       	content: '–'
@@ -43,15 +43,15 @@
           <button class="fsbutton" data-fs-gonext="1500" data-fs-toggle="hide">Start the show!</button>
         </section>
         <section class="center" data-transition="zoom-in fade-out">
-          <h3>FSButton.js</h3><small>Handles a few things:</small><br>
+          <h3>FsFx.js</h3><small>Handles a few things:</small><br>
           <ol>
-            <li>Enter or exit full-screen</li>
+            <li>Enter or exit fullscreen</li>
             <li>Trigger 'next slide' after fullscreen</li>
             <li>Toggle a class on any element if fullscreen</li>
           </ol>
         </section>
         <section class="center">
-          <h3>1. Enter or exit full-screen</h3>
+          <h3>1. Enter or exit fullscreen</h3>
           <ul>
             <li>Triggers if an element with a certain class is clicked</li>
             <li>This baseclass is 'fsbutton' by default</li>
@@ -73,7 +73,7 @@
             <li>The wildcard is the class that is toggled in fullscreen</li>
             <li>See the button below</li>
           </ul>
-          <button class="fsbutton icon-fs" data-fs-toggle="icon-fsexit">Toggle Fullscreen</button>
+          <button class="fsbutton icon-fs" data-fs-toggle="icon-fsexit">Toggle Fullscreen&nbsp;</button>
         </section>
       </div>
     </div>
@@ -81,14 +81,13 @@
     <script>
       Reveal.initialize({
       	transition: 'convex',
-      	fsbutton: {
+      	fsfx: {
       		baseclass: 'fsbutton',
       		hideifnofs: true
       	},
       	dependencies: [
-      		{ src: 'assets/js/revealjs/plugin/transit/transit.js', async: false },
       		{ src: 'assets/js/screenfull.min.js', async: false },
-      		{ src: 'assets/js/revealjs/plugin/fsbutton/fsbutton.js', async: true },
+      		{ src: 'assets/js/revealjs/plugin/fsfx/fsfx.js', async: true },
       	]
       });
     </script>

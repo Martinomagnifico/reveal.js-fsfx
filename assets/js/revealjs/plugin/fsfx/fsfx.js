@@ -2,7 +2,7 @@
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * FSButton.js for Reveal.js 1.0.0
+ * FsFx.js for Reveal.js 1.0.0
  *
  * @license 
  * MIT licensed
@@ -13,9 +13,9 @@
  ******************************************************************/
 
 
-const FSButton = window.FSButton || (function () {
+const FsFx = window.FsFx || (function () {
 
-	let options = Reveal.getConfig().fsbutton || {};
+	let options = Reveal.getConfig().fsfx || {};
 
 	let defaultOptions = {
 		baseclass: 'fsbutton',
@@ -98,5 +98,5 @@ const FSButton = window.FSButton || (function () {
 
 })();
 
-Reveal.registerPlugin('fsbutton', FSButton);
+Reveal.registerPlugin('fsfx', FsFx);
 /* global Reveal */

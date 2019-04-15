@@ -1,5 +1,5 @@
 # reveal.js-fsfx
-A plugin for [Reveal.js](https://revealjs.com) that enters or exits fullscreen, and toggles classes on certain elements.
+A plugin for [Reveal.js](https://revealjs.com) that enables buttons to enter or exit fullscreen; with optional delay to go to a next slide. The plugin also toggles classes on elements at fullscreen events.
 
 
 Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things.  

@@ -55,20 +55,26 @@ const FsFx = window.FsFx || (function () {
 			}
 
 			fsButton.onclick = function () {
-				screenfull.toggle((document)[0]).then(function () {
 
-					if (fsButton.hasAttribute("data-fs-gonext")) {
+				if (fsButton.hasAttribute("data-fs-gonext")) {
 
-						if (parseInt(fsButton.dataset.fsGonext) > 0) {
-							setTimeout((function () {
-								return Reveal.next();
-							}), parseInt(fsButton.dataset.fsGonext));
-						} else {
-							Reveal.next()
-						}
+					if (sfCheck() == true) {
+						screenfull.toggle((document)[0]).then(function () {
+
+							if (parseInt(fsButton.dataset.fsGonext) > 0) {
+								setTimeout((function () {
+									return Reveal.next();
+								}), parseInt(fsButton.dataset.fsGonext));
+							} else {
+								Reveal.next()
+							}
+						});
+					} else {
+						Reveal.next()
 					}
+				}
 
-				});
+
 			}
 		});
 
@@ -84,12 +90,17 @@ const FsFx = window.FsFx || (function () {
 				});
 			}
 		};
-		document.addEventListener(screenfull.raw.fullscreenchange, fullscreenchange);
+
+		if (sfCheck() == true) {
+			document.addEventListener(screenfull.raw.fullscreenchange, fullscreenchange);
+		}
+
 	}
 
 	const init = function () {
 		defaults(options, defaultOptions);
 		buttonCheck();
+
 	};
 
 	return {

@@ -74,7 +74,6 @@ const FsFx = window.FsFx || (function () {
 					}
 				}
 
-
 			}
 		});
 

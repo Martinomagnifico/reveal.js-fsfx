@@ -1,10 +1,8 @@
-"use strict";
-
 /*****************************************************************
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * FsFx.js for Reveal.js 1.0.2
+ * FsFx.js for Reveal.js 1.0.3
  *
  * @license 
  * MIT licensed
@@ -54,23 +52,33 @@ const FsFx = window.FsFx || (function () {
 
 
 		fsButtons.filter(function (fsButton) {
+
 			if (options.hideifnofs == true && sfCheck() == false && !fsButton.hasAttribute("data-fs-gonext")) {
 				fsButton.style.display = "none";
 			}
-	
+
 			fsButton.onclick = function () {
-				screenfull.toggle(document[0]).then(function () {
-					if (fsButton.hasAttribute("data-fs-gonext")) {
-						if (parseInt(fsButton.dataset.fsGonext) > 0) {
-							setTimeout(function () {
-								return Reveal.next();
-							}, parseInt(fsButton.dataset.fsGonext));
-						} else {
-							Reveal.next();
-						}
+
+				if (fsButton.hasAttribute("data-fs-gonext")) {
+
+					if (sfCheck() == true) {
+						screenfull.toggle((document)[0]).then(function () {
+
+							if (parseInt(fsButton.dataset.fsGonext) > 0) {
+								setTimeout((function () {
+									return Reveal.next();
+								}), parseInt(fsButton.dataset.fsGonext));
+							} else {
+								Reveal.next()
+							}
+						});
+					} else {
+						Reveal.next()
 					}
-				});
-			};
+				}
+
+
+			}
 		});
 
 		const fullscreenchange = function () {
@@ -85,12 +93,17 @@ const FsFx = window.FsFx || (function () {
 				});
 			}
 		};
-		document.addEventListener(screenfull.raw.fullscreenchange, fullscreenchange);
+
+		if (sfCheck() == true) {
+			document.addEventListener(screenfull.raw.fullscreenchange, fullscreenchange);
+		}
+
 	}
 
 	const init = function () {
 		defaults(options, defaultOptions);
 		buttonCheck();
+
 	};
 
 	return {

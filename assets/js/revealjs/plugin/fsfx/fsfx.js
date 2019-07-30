@@ -2,7 +2,7 @@
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * FsFx.js for Reveal.js 1.0.3
+ * FsFx.js for Reveal.js 1.0.4
  *
  * @license 
  * MIT licensed
@@ -33,6 +33,7 @@ const FsFx = window.FsFx || (function () {
 		}
 	}
 
+
 	const selectionArray = function (container, selectors) {
 		let selections = container.querySelectorAll(selectors);
 		let selectionarray = Array.prototype.slice.call(selections);
@@ -58,10 +59,9 @@ const FsFx = window.FsFx || (function () {
 			}
 
 			fsButton.onclick = function () {
+				if (sfCheck() == true) {
+					if (fsButton.hasAttribute("data-fs-gonext")) {
 
-				if (fsButton.hasAttribute("data-fs-gonext")) {
-
-					if (sfCheck() == true) {
 						screenfull.toggle((document)[0]).then(function () {
 
 							if (parseInt(fsButton.dataset.fsGonext) > 0) {
@@ -73,11 +73,9 @@ const FsFx = window.FsFx || (function () {
 							}
 						});
 					} else {
-						Reveal.next()
+						screenfull.toggle((document)[0])
 					}
 				}
-
-
 			}
 		});
 

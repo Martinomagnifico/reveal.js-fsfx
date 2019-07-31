@@ -2,7 +2,7 @@
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * FsFx.js for Reveal.js 1.0.4
+ * FsFx.js for Reveal.js 1.0.5
  *
  * @license 
  * MIT licensed
@@ -51,7 +51,6 @@ const FsFx = window.FsFx || (function () {
 		let fsButtons = selectionArray(document, ".".concat(options.baseclass));
 		let toggleThese = selectionArray(document, "[data-fs-toggle]");
 
-
 		fsButtons.filter(function (fsButton) {
 
 			if (options.hideifnofs == true && sfCheck() == false && !fsButton.hasAttribute("data-fs-gonext")) {
@@ -75,6 +74,8 @@ const FsFx = window.FsFx || (function () {
 					} else {
 						screenfull.toggle((document)[0])
 					}
+				} else {
+					Reveal.next()
 				}
 			}
 		});

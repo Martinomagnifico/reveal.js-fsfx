@@ -2,7 +2,7 @@
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * FsFx.js for Reveal.js 1.0.5
+ * FsFx.js for Reveal.js 1.0.6
  *
  * @license 
  * MIT licensed
@@ -33,6 +33,8 @@ const FsFx = window.FsFx || (function () {
 		}
 	}
 
+	const doc = (document)[0];
+
 
 	const selectionArray = function (container, selectors) {
 		let selections = container.querySelectorAll(selectors);
@@ -53,6 +55,16 @@ const FsFx = window.FsFx || (function () {
 
 		fsButtons.filter(function (fsButton) {
 
+			const goNext = function () {
+				if (parseInt(fsButton.dataset.fsGonext) > 0 && !screenfull.isFullscreen ) {
+					setTimeout((function () {
+						Reveal.next();
+					}), parseInt(fsButton.dataset.fsGonext));
+				} else {
+					Reveal.next()
+				}
+			}
+
 			if (options.hideifnofs == true && sfCheck() == false && !fsButton.hasAttribute("data-fs-gonext")) {
 				fsButton.style.display = "none";
 			}
@@ -61,18 +73,13 @@ const FsFx = window.FsFx || (function () {
 				if (sfCheck() == true) {
 					if (fsButton.hasAttribute("data-fs-gonext")) {
 
-						screenfull.toggle((document)[0]).then(function () {
-
-							if (parseInt(fsButton.dataset.fsGonext) > 0) {
-								setTimeout((function () {
-									return Reveal.next();
-								}), parseInt(fsButton.dataset.fsGonext));
-							} else {
-								Reveal.next()
-							}
-						});
+						if (screenfull.isFullscreen) {
+							goNext();
+						} else {
+							screenfull.request(doc).then(goNext());
+						}
 					} else {
-						screenfull.toggle((document)[0])
+						screenfull.toggle(doc);
 					}
 				} else {
 					Reveal.next()

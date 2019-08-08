@@ -69,14 +69,18 @@ It is easy to set up your fullscreen buttons. Adding the class 'fsbutton', or th
 ```html
 <button class="fsbutton">Start the show!</button>
 ```
+
+Fullscreen buttons will *toggle* the fullscreen state of the browser, unless the below data-fs-gonext attribute is set. It will then only go fullscreen, not back.
+
 #### Optional 'Next slide' functionality
 
-Add a data-fs-gonext attribute to the button. It would be wise to give it a value.  
+Add a data-fs-gonext attribute to the button. It would be wise to give it a value. If this is set, the browser will go fullscreen and then go to the next Reveal screen after the set time. If the browser is already fullscreen, it will not toggle back to windowed mode but will stay fullscreen and directly go to the next screen.  
 
 ```html
 <button class="fsbutton" data-fs-gonext="2000">Start the show!</button>
 ```
 #### Optional class toggle functionality
+
 ```html
 <p data-fs-toggle="hide">I have the class 'hide' in fullscreen</p>
 ```

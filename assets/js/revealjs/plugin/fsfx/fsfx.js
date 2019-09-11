@@ -2,7 +2,7 @@
  * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
  * https://github.com/Martinomagnifico
  *
- * FsFx.js for Reveal.js 1.0.6
+ * FsFx.js for Reveal.js 1.0.7
  *
  * @license 
  * MIT licensed
@@ -43,10 +43,12 @@ const FsFx = window.FsFx || (function () {
 	};
 
 	const sfCheck = function () {
-		if (typeof screenfull !== "undefined" && screenfull.enabled) {
+
+		if (typeof screenfull !== "undefined" && ( screenfull.enabled || screenfull.isEnabled) ) {
 			return true
 		}
 		return false
+
 	}
 
 	const buttonCheck = function () {

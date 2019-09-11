@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>FsFx for Reveal.js</title>
+    <title>FSFX for Reveal.js</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/reveal.css">
@@ -43,15 +43,15 @@
           <button class="fsbutton" data-fs-gonext="1500" data-fs-toggle="hide">Start the show!</button>
         </section>
         <section class="center" data-transition="zoom-in fade-out">
-          <h1>FsFx.js</h1><small>Handles a few things:</small><br>
+          <h3>FsFx.js</h3><small>Handles a few things:</small><br>
           <ol>
             <li>Enter or exit fullscreen</li>
             <li>Trigger 'next slide' after fullscreen</li>
-            <li>Toggle a class on if fullscreen</li>
+            <li>Toggle a class on any element if fullscreen</li>
           </ol>
         </section>
         <section class="center">
-          <h4>1. Enter or exit fullscreen</h4>
+          <h3>1. Enter or exit fullscreen</h3>
           <ul>
             <li>Triggers if an element with a certain class is clicked</li>
             <li>This baseclass is 'fsbutton' by default</li>
@@ -59,7 +59,7 @@
           </ul>
         </section>
         <section class="center">
-          <h4>2. Trigger 'next slide' after fullscreen</h4>
+          <h3>2. Trigger 'next slide' after fullscreen</h3>
           <ul>
             <li>If wanted, a 'next slide' function can be called</li>
             <li>It can be added with a <code>data-fs-gonext="*"</code> attribute</li>
@@ -67,35 +67,27 @@
           </ul>
         </section>
         <section class="center">
-          <h4>3. Toggle a class if fullscreen event</h4>
+          <h3>3. Toggle a class on any element if fullscreen</h3>
           <ul>
             <li>A class toggle can be added with a <code>data-fs-toggle="*"</code> attribute</li>
             <li>The wildcard is the class that is toggled in fullscreen</li>
-            <li>See this example CSS and the button below:</li>
+            <li>See the button below</li>
           </ul>
-          <pre style="border: 1px solid white"><code>.icon-fs:after {
-    content: '+'
-}
-.icon-fsexit:after {
-    content: '–'
-}
-</code></pre>
-          <button class="fsbutton icon-fs" data-fs-toggle="icon-fsexit">Toggle Fullscreen </button>
+          <button class="fsbutton icon-fs" data-fs-toggle="icon-fsexit">Toggle Fullscreen&nbsp;</button>
         </section>
       </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.8.0/js/reveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@3.8.0/js/reveal.min.js"></script>
     <script>
       Reveal.initialize({
       	transition: 'convex',
-      	history: true,
       	fsfx: {
       		baseclass: 'fsbutton',
       		hideifnofs: true
       	},
       	dependencies: [
-      		{ src: 'https://cdnjs.cloudflare.com/ajax/libs/screenfull.js/4.2.0/screenfull.js', async: false },
-      		{ src: 'assets/js/revealjs/plugin/fsfx/fsfx.js', async: true }
+      		{ src: 'https://cdn.jsdelivr.net/npm/screenfull@5.0.0/dist/screenfull.min.js', async: false },
+      		{ src: 'assets/js/revealjs/plugin/fsfx/fsfx.js', async: true },
       	]
       });
     </script>

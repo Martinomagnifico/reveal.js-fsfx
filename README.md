@@ -1,8 +1,8 @@
 # reveal.js-fsfx
-A plugin for [Reveal.js](https://revealjs.com) that enables buttons to enter or exit fullscreen; with optional delay to go to a next slide. The plugin also toggles classes on elements at fullscreen events.
+A plugin for [Reveal.js](https://revealjs.com) 4, that enters or exits fullscreen, and toggles classes on certain elements.
 
 
-Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time, or rather *almost* the same time. This plugin does just that. And some other things.  
+Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things.  
 
 
 Here's a [demo](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html) of a project that uses the FsFx.js plugin.
@@ -17,23 +17,23 @@ FsFx.js does multiple things:
 
 ## Installation
 
+The FsFx plugin has been rewritten for Reveal.js version 4.
+
+If you want to use FsFx with an older version of Reveal, use the [1.0.7 version](https://github.com/Martinomagnifico/reveal.js-fsfx/releases).
+
 FsFx.js needs one other (great) script to be able to function: [Screenfull.js](https://github.com/sindresorhus/screenfull.js) by [Sindre Sorhus](https://sindresorhus.com). This checks the capabilities of the browser to go fullscreen.
 
-Copy the fsfx folder to the plugins folder of the reveal.js folder, like this: `plugin/fsfx`. Now add it to the dependencies of Reveal.js. You can do the same for screenfull.js or the minified version of it (although you can add it anywhere in your HTML).
-
-
-```javascript
-Reveal.initialize({
-	// ...
-	dependencies: [
-		// ... 
-		{ src: 'js/revealjs/plugin/fsfx/fsfx.js' },
-		{ src: 'assets/js/screenfull.min.js'}
-		// ... 
-	]
-});
+```html
+<script type="text/javascript" src="assets/js/revealjs/reveal.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/screenfull@5.0.2/dist/screenfull.min.js"></script>
+<script src="assets/js/revealjs/plugin/fsfx/fsfx.js"></script>
+<script>
+	Reveal.initialize({
+		...
+		plugins: [ FsFx ]
+	});
+</script>
 ```
-
 
 
 ## Configuration
@@ -49,9 +49,7 @@ Reveal.initialize({
 		// Hide the buttons if fullscreen is not supported or if Screenfull is not available
 		hideifnofs: true
 	},
-	dependencies: [
-	// ... 
-	]
+	plugins: [ RevealFsFx ]
 });
 ```
 
@@ -69,18 +67,14 @@ It is easy to set up your fullscreen buttons. Adding the class 'fsbutton', or th
 ```html
 <button class="fsbutton">Start the show!</button>
 ```
-
-Fullscreen buttons will *toggle* the fullscreen state of the browser, unless the below data-fs-gonext attribute is set. It will then only go fullscreen, not back.
-
 #### Optional 'Next slide' functionality
 
-Add a data-fs-gonext attribute to the button. It would be wise to give it a value. If this is set, the browser will go fullscreen and then go to the next Reveal screen after the set time. If the browser is already fullscreen, it will not toggle back to windowed mode but will stay fullscreen and directly go to the next screen.  
+Add a data-fs-gonext attribute to the button. It would be wise to give it a value.  
 
 ```html
 <button class="fsbutton" data-fs-gonext="2000">Start the show!</button>
 ```
 #### Optional class toggle functionality
-
 ```html
 <p data-fs-toggle="hide">I have the class 'hide' in fullscreen</p>
 ```
@@ -97,4 +91,4 @@ If you like it, please star this repo.
 ## License
 MIT licensed
 
-Copyright (C) 2019 Martijn De Jongh (Martino)
+Copyright (C) 2020 Martijn De Jongh (Martino)

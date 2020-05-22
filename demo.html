@@ -1,31 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>FSFX for Reveal.js</title>
+    <title>FsFx.js for Reveal.js</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/reveal.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/theme/black.css">
+    <meta name="author" content="Martinomagnifico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link rel="stylesheet" href="assets/css/reset.css">
+    <link rel="stylesheet" href="assets/css/reveal.css">
+    <link rel="stylesheet" href="assets/css/black.css">
+    <style>
+      .slides {
+      	opacity: 0;
+      	transition: opacity .5s ease;
+      }
+      .reveal.ready .slides {
+      	opacity: 1;
+      }
+    </style>
     <style>
       .fsbutton {
       	display: inline-block;
-      	border: none;
-      	padding: 1em;
-      	margin: 1em;
       	text-decoration: none;
-      	background: #ffffff;
-      	color: #000000;
       	font-family: sans-serif;
-      	font-size: .5em;
       	cursor: pointer;
       	text-align: center;
       	-webkit-appearance: none;
       	-moz-appearance: none;
       	transition: opacity .5s ease-in-out;
       }
+      .slides .fsbutton {
+      	border: none;
+      	padding: 1em;
+      	margin: 1em;
+      	background: #ffffff;
+      	color: #000000;
+      	font-size: .5em;
+      }
+      .reveal > .fsbutton {
+      	border: 1px solid white;
+      	border-radius: 0.25em;
+      	width: 1.5em;
+      	height: 1.5em;
+      	margin: 0;
+      	background: none;
+      	color: white;
+      	font-size: 0.75em;
+      	line-height: 0.75em;
+      }
       .hide {
-      	opacity: 0;
+      	opacity: 0
       }
       .icon-fs:after {
       	content: '+'
@@ -33,17 +58,30 @@
       .icon-fsexit:after {
       	content: '–'
       }
+      .backgrounds {
+      	background: #1a1626;
+      	transition: background-color .5s ease-in-out;
+      }
+      .reveal.fullscreen .backgrounds {
+      	color: green;
+      	background: DarkSlateGray;
+      	background-color: DarkSlateGray;
+      }
+      
       
     </style>
   </head>
   <body>
-    <div class="reveal">
+    <div class="reveal" data-fs-toggle="fullscreen">
+      <button class="fsbutton icon-fs" style="position: absolute; right: 20px; top: 20px; z-index: 2;" data-fs-toggle="icon-fsexit"></button>
       <div class="slides">
         <section class="center" data-transition="fade">
+          <h1 class="animated flipInX slow">FsFx</h1>
+          <h3 class="animated flipInX slow" data-delay="700">for Reveal.js</h3>
           <button class="fsbutton" data-fs-gonext="1500" data-fs-toggle="hide">Start the show!</button>
         </section>
         <section class="center" data-transition="zoom-in fade-out">
-          <h3>FsFx.js</h3><small>Handles a few things:</small><br>
+          <h3>FsFx.js</h3><small>Can do a few things:</small><br><br>
           <ol>
             <li>Enter or exit fullscreen</li>
             <li>Trigger 'next slide' after fullscreen</li>
@@ -59,7 +97,7 @@
           </ul>
         </section>
         <section class="center">
-          <h3>2. Trigger 'next slide' after fullscreen</h3>
+          <h3>2. Trigger 'next slide' after fullscreen</h3><small>The start button on the first page of this deck does exacly that</small><br><br>
           <ul>
             <li>If wanted, a 'next slide' function can be called</li>
             <li>It can be added with a <code>data-fs-gonext="*"</code> attribute</li>
@@ -67,17 +105,19 @@
           </ul>
         </section>
         <section class="center">
-          <h3>3. Toggle a class on any element if fullscreen</h3>
+          <h3>3. Toggle a class on any element if the presentation is fullscreen</h3>
           <ul>
             <li>A class toggle can be added with a <code>data-fs-toggle="*"</code> attribute</li>
             <li>The wildcard is the class that is toggled in fullscreen</li>
-            <li>See the button below</li>
+            <li>In this presentation, see the changes in fullscreen: The body background and the button icons:</li>
           </ul>
           <button class="fsbutton icon-fs" data-fs-toggle="icon-fsexit">Toggle Fullscreen&nbsp;</button>
         </section>
       </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/reveal.js@3.8.0/js/reveal.min.js"></script>
+    <script type="text/javascript" src="assets/js/revealjs/reveal.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/screenfull@5.0.2/dist/screenfull.min.js"></script>
+    <script src="assets/js/revealjs/plugin/fsfx/fsfx.js"></script>
     <script>
       Reveal.initialize({
       	transition: 'convex',
@@ -85,10 +125,7 @@
       		baseclass: 'fsbutton',
       		hideifnofs: true
       	},
-      	dependencies: [
-      		{ src: 'https://cdn.jsdelivr.net/npm/screenfull@5.0.0/dist/screenfull.min.js', async: false },
-      		{ src: 'assets/js/revealjs/plugin/fsfx/fsfx.js', async: true },
-      	]
+      	plugins: [ FsFx ]
       });
     </script>
   </body>

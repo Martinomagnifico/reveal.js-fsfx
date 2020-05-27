@@ -1,12 +1,10 @@
 # FsFx
 
-![Screenshot](screenshot.png)
-
 A plugin for [Reveal.js](https://revealjs.com) 4, that enters or exits fullscreen, and toggles classes on certain elements.
 
-Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things. 
+[![Screenshot](screenshot.png)](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html)
 
-It is mainly usefull for **desktop browsers** to get an immersive experience; *not all mobile browsers support the fullscreen API*. For those cases where the browser does not support it, FsFx has options to hide the fullscreen buttons or to change the functionality.
+Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things.  
 
 Here's a [demo](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html) of a project that uses the FsFx.js plugin.
 

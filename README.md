@@ -46,7 +46,7 @@ The FsFx plugin folder can then be referenced from `node_modules/reveal.js-fsfx/
 
 ```html
 <script type="text/javascript" src="dist/reveal.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/screenfull@5.0.2/dist/screenfull.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.min.js"></script>
 <script type="text/javascript" src="plugin/fsfx/fsfx.js"></script>
 <script>
 	Reveal.initialize({

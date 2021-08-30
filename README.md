@@ -103,7 +103,6 @@ Reveal.initialize({
 A fullscreen button will **not** be hidden with the `hideifnofs` option, if a `data-fs-gonext` attribute (explained below) is **also** set. This means that that button's functionality will fall back to 'next slide' only, if there is no fullscreen support.
 
 
-
 ## Like it?
 
 If you like it, please star this repo! 

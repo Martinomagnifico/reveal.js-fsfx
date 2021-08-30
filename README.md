@@ -1,6 +1,6 @@
 # FsFx
 
-[![Version](https://img.shields.io/npm/v/reveal.js-fsfx)](#) [![Version](https://img.shields.io/npms-io/maintenance-score/reveal.js-fsfx)](#) [![Downloads](https://img.shields.io/npm/dt/reveal.js-fsfx)](https://github.com/Martinomagnifico/reveal.js-fsfx/archive/refs/heads/master.zip)
+[![Version](https://img.shields.io/npm/v/reveal.js-fsfx)](#) [![Downloads](https://img.shields.io/npm/dt/reveal.js-fsfx)](https://github.com/Martinomagnifico/reveal.js-fsfx/archive/refs/heads/master.zip)
 
 A plugin for [Reveal.js](https://revealjs.com) 4, that enters or exits fullscreen, and toggles classes on certain elements.
 

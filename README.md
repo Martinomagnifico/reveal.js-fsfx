@@ -90,7 +90,7 @@ Reveal.initialize({
 		baseclass: 'fsbutton',
 		hideifnofs: true
 	},
-	plugins: [ RevealFsFx ]
+	plugins: [ FsFx ]
 });
 ```
 

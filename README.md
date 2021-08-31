@@ -36,7 +36,7 @@ Copy the fsfx folder to the plugins folder of the reveal.js folder, like this: `
 
 This plugin is published to, and can be installed from, npm.
 
-```javascript
+```console
 npm install reveal.js-fsfx
 ```
 The FsFx plugin folder can then be referenced from `node_modules/reveal.js-fsfx/plugin/fsfx `

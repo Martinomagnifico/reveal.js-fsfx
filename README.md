@@ -4,7 +4,7 @@
 
 A plugin for [Reveal.js](https://revealjs.com) 4, that enters or exits fullscreen, and toggles classes on certain elements.
 
-[![Screenshot](screenshot.png)](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html)
+[![Screenshot](https://martinomagnifico.github.io/reveal.js-fsfx/screenshot.png)](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html)
 
 Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things.  
 

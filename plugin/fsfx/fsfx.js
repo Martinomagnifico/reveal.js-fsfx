@@ -4,7 +4,7 @@
  * https://github.com/Martinomagnifico
  *
  * FsFx.js for Reveal.js 
- * Version 1.0.9
+ * Version 1.1.0
  * 
  * @license 
  * MIT licensed
@@ -41,9 +41,9 @@
 	    var toggleThese = selectionArray(document, "[data-fs-toggle]");
 
 	    var hideIfNoFS = function hideIfNoFS(fsButton) {
-	      if (options.hideifnofs == true && !fsButton.hasAttribute("data-fs-gonext")) {
-	        fsButton.style.display = "none";
-	      } else {
+	      if (options.hideifnofs == true && !fsButton.hasAttribute("data-fs-gonext")) ; else {
+	        fsButton.style.display = "inline-block";
+
 	        fsButton.onclick = function () {
 	          deck.next();
 	        };
@@ -52,6 +52,8 @@
 
 	    var buttonCheck = function buttonCheck(fsButtons) {
 	      fsButtons.filter(function (fsButton) {
+	        fsButton.style.display = "inline-block";
+
 	        var goNext = function goNext() {
 	          if (parseInt(fsButton.dataset.fsGonext) > 0 && !screenfull.isFullscreen) {
 	            setTimeout(function () {
@@ -101,16 +103,23 @@
 	    };
 
 	    if (typeof screenfull !== "undefined") {
-	      if (fsButtons.length > 0) {
-	        buttonCheck(fsButtons);
+	      if (!sfEnabled()) {
+	        console.log("The browser does not support the Fullscreen API.");
+	        fsButtons.filter(function (fsButton) {
+	          hideIfNoFS(fsButton);
+	        });
 	      } else {
-	        console.log("There are no FS buttons");
-	      }
+	        if (fsButtons.length > 0) {
+	          buttonCheck(fsButtons);
+	        } else {
+	          console.log("There are no FS buttons");
+	        }
 
-	      if (toggleThese.length > 0) {
-	        toggleCheck(toggleThese);
-	      } else {
-	        console.log("There are no elements with 'data-fs-toggle'.");
+	        if (toggleThese.length > 0) {
+	          toggleCheck(toggleThese);
+	        } else {
+	          console.log("There are no elements with 'data-fs-toggle'.");
+	        }
 	      }
 	    } else {
 	      fsButtons.filter(function (fsButton) {

@@ -13,6 +13,9 @@ ul, ol {
 li + li {
   margin-top: 0.3em; }
 
+.small {
+  font-size: .6em; }
+
 .fsbutton {
   border-radius: 6px;
   display: none;
@@ -97,6 +100,14 @@ li + li {
   color: green;
   background: DarkSlateGray;
   background-color: DarkSlateGray; }
+
+.fsfx-disabled {
+  display: none; }
+  .no-fsfx .fsfx-disabled {
+    display: block; }
+
+.no-fsfx .fsfx-enabled {
+  display: none; }
 
 a.github-corner {
   position: absolute;

@@ -25,7 +25,7 @@ The FsFx plugin has been rewritten for Reveal.js version 4.
 
 If you want to use FsFx with an older version of Reveal, use the [1.0.7 version](https://github.com/Martinomagnifico/reveal.js-fsfx/releases).
 
-FsFx.js needs one other (great) script to be able to function: [Screenfull.js](https://github.com/sindresorhus/screenfull.js) by [Sindre Sorhus](https://sindresorhus.com). This checks the capabilities of the browser to go fullscreen.
+FsFx.js automatically includes a (great) script to be able to function: [Screenfull.js](https://github.com/sindresorhus/screenfull.js) by [Sindre Sorhus](https://sindresorhus.com). This checks the capabilities of the browser to go fullscreen. Screenfull is already imported into FsFx.
 
 
 ### Regular installation
@@ -46,17 +46,40 @@ The FsFx plugin folder can then be referenced from `node_modules/reveal.js-fsfx/
 
 ### JavaScript
 
+The FsFx plugin has been written for Reveal.js version 4.
+
+There are two JavaScript files for FsFx, a regular one, `fsfx.js`, and a module one, `fsfx.esm.js`. You only need one of them:
+
+
+#### Regular 
+If you're not using ES modules, for example, to be able to run your presentation from the filesystem, you can add it like this:
+
 ```html
 <script type="text/javascript" src="dist/reveal.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/screenfull@5.1.0/dist/screenfull.min.js"></script>
 <script type="text/javascript" src="plugin/fsfx/fsfx.js"></script>
 <script>
-	Reveal.initialize({
-		...
-		plugins: [ FsFx ]
-	});
+    Reveal.initialize({
+        ...
+        plugins: [ FsFx ]
+    });
 </script>
 ```
+
+#### As a module 
+If you're using ES modules, you can add it like this:
+
+```html
+<script type="module">
+    // This will need a server
+    import Reveal from './dist/reveal.esm.js';
+    import FsFx from './plugin/fsfx/fsfx.esm.js';
+    Reveal.initialize({
+        // ...
+        plugins: [ FsFx ]
+    });
+</script>
+```
+
 
 ### HTML
 
@@ -87,20 +110,26 @@ There are a few options that you can change from the Reveal.js options. The valu
 
 ```javascript
 Reveal.initialize({
-	// ...
-	fsfx: {
-		baseclass: 'fsbutton',
-		hideifnofs: true
-	},
-	plugins: [ FsFx ]
+    // ...
+    fsfx: {
+        baseclass: 'fsbutton',
+        hideifnofs: true
+    },
+    plugins: [ FsFx ]
 });
 ```
 
 
 * **`baseclass`**: The baseclass of the fullscreen button(s). Change it if you like. 
-* **`hideifnofs`**: Any button that should enter or exit fullscreen can do that because it has the baseclass. However, if Screenfull (the script that checks the browser fullscreen capabilities), is either not loaded or decides that the browser does not support fullscreen, a fullscreen button just sits there unable to do anything. So the option 'hideifnofs' hides the button by default. This can be overruled by setting it to false. 
+* **`hideifnofs`**: Any button that should enter or exit fullscreen can do that because it has the baseclass. However, if the fullscreen API is not supported, a fullscreen button just sits there unable to do anything. So the option 'hideifnofs' hides the button by default. This can be overruled by setting it to false. 
 
 A fullscreen button will **not** be hidden with the `hideifnofs` option, if a `data-fs-gonext` attribute (explained below) is **also** set. This means that that button's functionality will fall back to 'next slide' only, if there is no fullscreen support.
+
+
+## Device compatibility
+
+If a device (looking at you, iPhone) does not support the Fullscreen API, a class of `no-fsfx` will be added to the body. You can use it to show warnings, hide elements etcetera.
+
 
 
 ## Like it?

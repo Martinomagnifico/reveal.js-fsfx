@@ -25,7 +25,7 @@ The FsFx plugin has been rewritten for Reveal.js version 4.
 
 If you want to use FsFx with an older version of Reveal, use the [1.0.7 version](https://github.com/Martinomagnifico/reveal.js-fsfx/releases).
 
-FsFx.js automatically includes a (great) script to be able to function: [Screenfull.js](https://github.com/sindresorhus/screenfull.js) by [Sindre Sorhus](https://sindresorhus.com). This checks the capabilities of the browser to go fullscreen. Screenfull is already imported into FsFx.
+FsFx.js automatically includes a (great) script to be able to function: [Screenfull.js](https://github.com/sindresorhus/screenfull.js) by [Sindre Sorhus](https://sindresorhus.com). This checks the capabilities of the browser to go fullscreen.
 
 
 ### Regular installation
@@ -45,8 +45,6 @@ The FsFx plugin folder can then be referenced from `node_modules/reveal.js-fsfx/
 ## Setup
 
 ### JavaScript
-
-The FsFx plugin has been written for Reveal.js version 4.
 
 There are two JavaScript files for FsFx, a regular one, `fsfx.js`, and a module one, `fsfx.esm.js`. You only need one of them:
 
@@ -142,4 +140,4 @@ And if you want to show off what you made with it, please do :-)
 ## License
 MIT licensed
 
-Copyright (C) 2020 Martijn De Jongh (Martino)
+Copyright (C) 2022 Martijn De Jongh (Martino)

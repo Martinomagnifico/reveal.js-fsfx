@@ -22,7 +22,6 @@ const Plugin = () => {
 
 		let toggleThese = selectionArray(document, "[data-fs-toggle]");
 
-
 		const hideIfNoFS = function (fsButton) {
 			if (options.hideifnofs == true && !fsButton.hasAttribute("data-fs-gonext")) {} else {
 				fsButton.style.display = "inline-block";
@@ -108,9 +107,7 @@ const Plugin = () => {
 				console.log("There are no elements with 'data-fs-toggle'.");
 			}
 		}
-
 	}
-
 
 	const init = function (deck) {
 
@@ -132,7 +129,6 @@ const Plugin = () => {
 		defaults(options, defaultOptions);
 
 		fullScreenEffects(deck, options);
-
 	};
 
 	return {

@@ -1,3 +1,7 @@
+:root {
+  --r-background-color: #1a1626;
+}
+
 .slides {
   opacity: 0;
   -webkit-transition: opacity 0.5s ease;
@@ -101,21 +105,15 @@ li + li {
   content: "-";
 }
 
-.reveal-viewport {
-  background: #1a1626;
-}
-
 .backgrounds {
-  background: #1a1626;
+  background: var(--r-background-color);
   -webkit-transition: background-color 0.5s ease-in-out;
   -o-transition: background-color 0.5s ease-in-out;
   transition: background-color 0.5s ease-in-out;
 }
 
 .reveal.fullscreen .backgrounds {
-  color: green;
   background: DarkSlateGray;
-  background-color: DarkSlateGray;
 }
 
 .fsfx-disabled {

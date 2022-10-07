@@ -4,7 +4,7 @@
  * https://github.com/Martinomagnifico
  *
  * FsFx.js for Reveal.js 
- * Version 1.1.2
+ * Version 1.1.3
  * 
  * @license 
  * MIT licensed
@@ -297,6 +297,9 @@ var Plugin = function Plugin() {
     var viewport = deck.getRevealElement().tagName == "BODY" ? document : deck.getRevealElement();
     var fsButtons = selectionArray(viewport, ".".concat(options.baseclass));
     var toggleThese = selectionArray(document, "[data-fs-toggle]");
+    var sheet = document.styleSheets[0];
+    var prefix = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase()) ? '-moz-' : /webkit/.test(navigator.userAgent.toLowerCase()) ? '-webkit-' : /msie/.test(navigator.userAgent.toLowerCase()) ? '-ms-' : /opera/.test(navigator.userAgent.toLowerCase()) ? '-o-' : '';
+    sheet.insertRule(":".concat(prefix, "full-screen {background: var(--r-background-color)}"));
 
     var hideIfNoFS = function hideIfNoFS(fsButton) {
       if (options.hideifnofs == true && !fsButton.hasAttribute("data-fs-gonext")) ; else {

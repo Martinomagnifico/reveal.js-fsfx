@@ -22,13 +22,15 @@ const Plugin = () => {
 
 		let toggleThese = selectionArray(document, "[data-fs-toggle]");
 
-		let sheet = document.styleSheets[0];
 		let prefix = (/mozilla/.test(navigator.userAgent.toLowerCase()) && 
 		!/webkit/.test(navigator.userAgent.toLowerCase())) ? '-moz-' : 
 		(/webkit/.test(navigator.userAgent.toLowerCase())) ? '-webkit-' :
 		(/msie/.test(navigator.userAgent.toLowerCase()))   ? '-ms-' :
 		(/opera/.test(navigator.userAgent.toLowerCase()))  ? '-o-' : '';
-		sheet.insertRule(`:${prefix}full-screen {background: var(--r-background-color)}`);
+		const fsStyleSheet = document.createElement("style");
+		fsStyleSheet.type="text/css";
+		fsStyleSheet.innerText = `:${prefix}full-screen {background: var(--r-background-color)}`;
+		document.head.appendChild(fsStyleSheet);
 
 		const hideIfNoFS = function (fsButton) {
 			if (options.hideifnofs == true && !fsButton.hasAttribute("data-fs-gonext")) {} else {

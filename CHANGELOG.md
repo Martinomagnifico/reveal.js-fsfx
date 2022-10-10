@@ -1,5 +1,12 @@
 # Changelog
 
+
+## [1.1.4] - 2022-10-09
+
+### Fixed
+- Insert CSS rule as a style tag for filesystem presentations on Chrome.
+
+
 ## [1.1.3] - 2022-10-07
 
 ### Changed

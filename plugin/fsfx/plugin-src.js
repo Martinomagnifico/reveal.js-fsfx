@@ -66,7 +66,6 @@ const Plugin = () => {
 								goNext();
 							} else {
 								screenfull.request(viewport).then(goNext());
-								element.requestFullscreen()
 							}
 						} else {
 							screenfull.toggle(viewport);

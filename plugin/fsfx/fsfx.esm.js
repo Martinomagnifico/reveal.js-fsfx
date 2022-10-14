@@ -4,7 +4,7 @@
  * https://github.com/Martinomagnifico
  *
  * FsFx.js for Reveal.js 
- * Version 1.1.4
+ * Version 1.1.5
  * 
  * @license 
  * MIT licensed
@@ -334,7 +334,6 @@ var Plugin = function Plugin() {
                 goNext();
               } else {
                 screenfull$1.request(viewport).then(goNext());
-                element.requestFullscreen();
               }
             } else {
               screenfull$1.toggle(viewport);

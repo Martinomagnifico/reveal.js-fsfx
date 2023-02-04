@@ -25,94 +25,54 @@ li + li {
   font-size: 0.6em;
 }
 
-.fsbutton {
-  border-radius: 6px;
-  display: none;
+.bigbutton {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
   text-decoration: none;
   cursor: pointer;
   text-align: center;
+  appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   -webkit-transition: opacity 0.5s ease-in-out;
   -o-transition: opacity 0.5s ease-in-out;
   transition: opacity 0.5s ease-in-out;
+  border: none;
+  border-radius: 0.25em;
+  background: var(--r-main-color);
+  color: var(--r-opposite-color, black);
+  font-size: clamp(1rem, 1vw + 1rem, 2rem);
+  padding: 0.5em 0.6em;
+  margin: 1em;
+  -webkit-box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+  -webkit-transition: color 0.15s ease-in-out;
+  -o-transition: color 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+.reveal.focused.fullscreen .bigbutton {
+  color: DarkSlateGray;
 }
 
 .reveal > .fsbutton {
-  border: 1.1px solid white;
-  margin: 0;
-  padding: 0;
-  background: none;
-  color: white;
-  font-size: 1rem;
-  font-size: clamp(1rem, 1vw + 1rem, 2rem);
-  line-height: 0;
-  padding: 6px;
-  opacity: 0.6;
-  -webkit-transition: opacity 0.15s ease-in-out;
-  -o-transition: opacity 0.15s ease-in-out;
-  transition: opacity 0.15s ease-in-out;
-}
-.reveal > .fsbutton:hover {
-  opacity: 1;
+  position: absolute;
+  z-index: 2;
 }
 
-.slides .fsbutton {
-  border: none;
-  padding: 1em;
-  margin: 1em;
-  background: #ffffff;
-  color: #000000;
-  font-size: 0.5em;
-  -webkit-box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-}
-.slides .fsbutton:hover {
-  -webkit-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-          box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5);
-}
-
-.hide {
-  opacity: 0;
-}
-
-@font-face {
-  font-family: "fsfx";
-  src: url(data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAWcAAsAAAAABVAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDxEMrGNtYXAAAAFoAAAAXAAAAFwAaQDdZ2FzcAAAAcQAAAAIAAAACAAAABBnbHlmAAABzAAAAagAAAGol0gf52hlYWQAAAN0AAAANgAAADYevkEjaGhlYQAAA6wAAAAkAAAAJAfCA8dobXR4AAAD0AAAABgAAAAYDgAACmxvY2EAAAPoAAAADgAAAA4A/ACObWF4cAAAA/gAAAAgAAAAIAAJAENuYW1lAAAEGAAAAWIAAAFiTFMt/nBvc3QAAAV8AAAAIAAAACAAAwAAAAMDVQGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAC0DwP/AAEADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEAEAAAAAMAAgAAgAEAAEAIAArAC3//f//AAAAAAAgACsALf/9//8AAf/j/9n/2AADAAEAAAAAAAAAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAACAAD/wAQAA8AAHwBAAAABNjIXFhQHMQEhMhYfARQGIzEhIiY1MRE0NjMyFhUxEQEyFhUxERQGIyImNTERAQ4BLwEmNDcxASEiJi8BNDYzMQGCChwKCgr+wwECDhMBARQP/qsOFBQODhQDmg4UFA4OFP7DChkKBAoKAT3+/g4TAQEUDwFyCgoKHQr+wxENBA4UFA4BVQ8UFA/+/QOMFA7+qw8UFA8BAv7DCQEIAgodCgE9EQ0EDhQAAgAK/8cD9gO2AB8AQAAAATYyFxYUBzEBITIWFxUUBiMxISImNTERNDYzMhYVMREHMhYVMREUBiMiJjUxEQEOAS8BJjQ3MQEhIiYnNTQ2MzEDxgocCgoK/sMBAw0TAhQO/qoOFBQODhTuDhQUDg8U/sMJGgoDCgoBPf79DRMCFA4DtgoKChwK/sMSDQQOFBQOAVYOFBQO/v39FA7+qg4UFA4BA/7DCQIIAwocCgE9Eg0EDhQAAQAAAAEAAOz603dfDzz1AAsEAAAAAADdz35TAAAAAN3PflMAAP/ABAADwAAAAAgAAgAAAAAAAAABAAADwP/AAAAEAAAAAAAEAAABAAAAAAAAAAAAAAAAAAAABgQAAAAAAAAAAAAAAAIAAAAEAAAABAAACgAAAAAACgAUAB4AegDUAAAAAQAAAAYAQQACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAQAAAABAAAAAAACAAcARQABAAAAAAADAAQALQABAAAAAAAEAAQAWgABAAAAAAAFAAsADAABAAAAAAAGAAQAOQABAAAAAAAKABoAZgADAAEECQABAAgABAADAAEECQACAA4ATAADAAEECQADAAgAMQADAAEECQAEAAgAXgADAAEECQAFABYAFwADAAEECQAGAAgAPQADAAEECQAKADQAgGZzZngAZgBzAGYAeFZlcnNpb24gMS4wAFYAZQByAHMAaQBvAG4AIAAxAC4AMGZzZngAZgBzAGYAeGZzZngAZgBzAGYAeFJlZ3VsYXIAUgBlAGcAdQBsAGEAcmZzZngAZgBzAGYAeEZvbnQgZ2VuZXJhdGVkIGJ5IEljb01vb24uAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format("woff");
-  font-weight: normal;
-  font-style: normal;
-}
-.icon-fs:after {
-  font-family: "fsfx";
-  content: "+";
-  line-height: 1;
-  width: 1em;
-  height: 1em;
-  font-style: normal;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.slides .bigbutton.icon-fs:after {
   margin-left: 12px;
 }
 
-.reveal > .icon-fs:after {
-  margin-left: 0;
+.reveal .backgrounds {
+  -webkit-transition: background-color 3s cubic-bezier(0.26, 0.86, 0.44, 0.985) !important;
+  -o-transition: background-color 3s cubic-bezier(0.26, 0.86, 0.44, 0.985) !important;
+  transition: background-color 3s cubic-bezier(0.26, 0.86, 0.44, 0.985) !important;
 }
-
-.icon-fsexit:after {
-  content: "-";
-}
-
-.backgrounds {
-  background: var(--r-background-color);
-  -webkit-transition: background-color 0.5s ease-in-out;
-  -o-transition: background-color 0.5s ease-in-out;
-  transition: background-color 0.5s ease-in-out;
-}
-
-.reveal.fullscreen .backgrounds {
+.reveal.focused.fullscreen .backgrounds {
   background: DarkSlateGray;
 }
 

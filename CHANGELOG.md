@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.2.0] - 2023-02-04
+
+### Breaking changes
+- FsFx will no longer set the styling of fullscreen buttons to `display: inline-block` because that relies on the user setting `display:none` in their CSS, for buttons in unsupported browsers. A compatibilitymode is added.
+
+### Added
+- Added auto-mode
+	- Includes a predesigned fullscreen icon.
+	- Has a user-definable color and opposite color
+	- Has user-definable position
+
+
+## [1.1.5] - 2022-10-19
+
+### Changed
+- Changed the way of how unsupported fullscreen buttons are hidden.
+
 
 ## [1.1.5] - 2022-10-14
 

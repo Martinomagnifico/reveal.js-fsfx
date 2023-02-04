@@ -4,7 +4,7 @@
  * https://github.com/Martinomagnifico
  *
  * FsFx.js for Reveal.js 
- * Version 1.1.5
+ * Version 1.2.0
  * 
  * @license 
  * MIT licensed
@@ -15,258 +15,118 @@
  ******************************************************************/
 
 
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-
-  var _s, _e;
-
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-
-      if (i && _arr.length === i) break;
-    }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-
-  return _arr;
-}
-
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-
-  return arr2;
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _createForOfIteratorHelper(o, allowArrayLike) {
-  var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"];
-
-  if (!it) {
-    if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
-      if (it) o = it;
-      var i = 0;
-
-      var F = function () {};
-
-      return {
-        s: F,
-        n: function () {
-          if (i >= o.length) return {
-            done: true
-          };
-          return {
-            done: false,
-            value: o[i++]
-          };
-        },
-        e: function (e) {
-          throw e;
-        },
-        f: F
-      };
-    }
-
-    throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-  }
-
-  var normalCompletion = true,
-      didErr = false,
-      err;
-  return {
-    s: function () {
-      it = it.call(o);
-    },
-    n: function () {
-      var step = it.next();
-      normalCompletion = step.done;
-      return step;
-    },
-    e: function (e) {
-      didErr = true;
-      err = e;
-    },
-    f: function () {
-      try {
-        if (!normalCompletion && it.return != null) it.return();
-      } finally {
-        if (didErr) throw err;
-      }
-    }
-  };
-}
-
 /* eslint-disable promise/prefer-await-to-then */
-var methodMap = [['requestFullscreen', 'exitFullscreen', 'fullscreenElement', 'fullscreenEnabled', 'fullscreenchange', 'fullscreenerror'], // New WebKit
+const methodMap = [['requestFullscreen', 'exitFullscreen', 'fullscreenElement', 'fullscreenEnabled', 'fullscreenchange', 'fullscreenerror'], // New WebKit
 ['webkitRequestFullscreen', 'webkitExitFullscreen', 'webkitFullscreenElement', 'webkitFullscreenEnabled', 'webkitfullscreenchange', 'webkitfullscreenerror'], // Old WebKit
 ['webkitRequestFullScreen', 'webkitCancelFullScreen', 'webkitCurrentFullScreenElement', 'webkitCancelFullScreen', 'webkitfullscreenchange', 'webkitfullscreenerror'], ['mozRequestFullScreen', 'mozCancelFullScreen', 'mozFullScreenElement', 'mozFullScreenEnabled', 'mozfullscreenchange', 'mozfullscreenerror'], ['msRequestFullscreen', 'msExitFullscreen', 'msFullscreenElement', 'msFullscreenEnabled', 'MSFullscreenChange', 'MSFullscreenError']];
 
-var nativeAPI = function () {
-  var unprefixedMethods = methodMap[0];
-  var returnValue = {};
+const nativeAPI = (() => {
+  const unprefixedMethods = methodMap[0];
+  const returnValue = {};
 
-  var _iterator = _createForOfIteratorHelper(methodMap),
-      _step;
+  for (const methodList of methodMap) {
+    const exitFullscreenMethod = methodList === null || methodList === void 0 ? void 0 : methodList[1];
 
-  try {
-    for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var methodList = _step.value;
-      var exitFullscreenMethod = methodList === null || methodList === void 0 ? void 0 : methodList[1];
-
-      if (exitFullscreenMethod in document) {
-        var _iterator2 = _createForOfIteratorHelper(methodList.entries()),
-            _step2;
-
-        try {
-          for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-            var _step2$value = _slicedToArray(_step2.value, 2),
-                index = _step2$value[0],
-                method = _step2$value[1];
-
-            returnValue[unprefixedMethods[index]] = method;
-          }
-        } catch (err) {
-          _iterator2.e(err);
-        } finally {
-          _iterator2.f();
-        }
-
-        return returnValue;
+    if (exitFullscreenMethod in document) {
+      for (const [index, method] of methodList.entries()) {
+        returnValue[unprefixedMethods[index]] = method;
       }
+
+      return returnValue;
     }
-  } catch (err) {
-    _iterator.e(err);
-  } finally {
-    _iterator.f();
   }
 
   return false;
-}();
+})();
 
-var eventNameMap = {
+const eventNameMap = {
   change: nativeAPI.fullscreenchange,
   error: nativeAPI.fullscreenerror
 }; // eslint-disable-next-line import/no-mutable-exports
 
-var screenfull = {
+let screenfull = {
   // eslint-disable-next-line default-param-last
-  request: function request() {
-    var element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.documentElement;
-    var options = arguments.length > 1 ? arguments[1] : undefined;
-    return new Promise(function (resolve, reject) {
-      var onFullScreenEntered = function onFullScreenEntered() {
+  request() {
+    let element = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : document.documentElement;
+    let options = arguments.length > 1 ? arguments[1] : undefined;
+    return new Promise((resolve, reject) => {
+      const onFullScreenEntered = () => {
         screenfull.off('change', onFullScreenEntered);
         resolve();
       };
 
       screenfull.on('change', onFullScreenEntered);
-      var returnPromise = element[nativeAPI.requestFullscreen](options);
+      const returnPromise = element[nativeAPI.requestFullscreen](options);
 
       if (returnPromise instanceof Promise) {
         returnPromise.then(onFullScreenEntered).catch(reject);
       }
     });
   },
-  exit: function exit() {
-    return new Promise(function (resolve, reject) {
+
+  exit() {
+    return new Promise((resolve, reject) => {
       if (!screenfull.isFullscreen) {
         resolve();
         return;
       }
 
-      var onFullScreenExit = function onFullScreenExit() {
+      const onFullScreenExit = () => {
         screenfull.off('change', onFullScreenExit);
         resolve();
       };
 
       screenfull.on('change', onFullScreenExit);
-      var returnPromise = document[nativeAPI.exitFullscreen]();
+      const returnPromise = document[nativeAPI.exitFullscreen]();
 
       if (returnPromise instanceof Promise) {
         returnPromise.then(onFullScreenExit).catch(reject);
       }
     });
   },
-  toggle: function toggle(element, options) {
+
+  toggle(element, options) {
     return screenfull.isFullscreen ? screenfull.exit() : screenfull.request(element, options);
   },
-  onchange: function onchange(callback) {
+
+  onchange(callback) {
     screenfull.on('change', callback);
   },
-  onerror: function onerror(callback) {
+
+  onerror(callback) {
     screenfull.on('error', callback);
   },
-  on: function on(event, callback) {
-    var eventName = eventNameMap[event];
+
+  on(event, callback) {
+    const eventName = eventNameMap[event];
 
     if (eventName) {
       document.addEventListener(eventName, callback, false);
     }
   },
-  off: function off(event, callback) {
-    var eventName = eventNameMap[event];
+
+  off(event, callback) {
+    const eventName = eventNameMap[event];
 
     if (eventName) {
       document.removeEventListener(eventName, callback, false);
     }
   },
+
   raw: nativeAPI
 };
 Object.defineProperties(screenfull, {
   isFullscreen: {
-    get: function get() {
-      return Boolean(document[nativeAPI.fullscreenElement]);
-    }
+    get: () => Boolean(document[nativeAPI.fullscreenElement])
   },
   element: {
     enumerable: true,
-    get: function get() {
-      var _document$nativeAPI$f;
-
-      return (_document$nativeAPI$f = document[nativeAPI.fullscreenElement]) !== null && _document$nativeAPI$f !== void 0 ? _document$nativeAPI$f : undefined;
-    }
+    get: () => document[nativeAPI.fullscreenElement] ?? undefined
   },
   isEnabled: {
     enumerable: true,
     // Coerce to boolean in case of old WebKit.
-    get: function get() {
-      return Boolean(document[nativeAPI.fullscreenEnabled]);
-    }
+    get: () => Boolean(document[nativeAPI.fullscreenEnabled])
   }
 });
 
@@ -278,75 +138,180 @@ if (!nativeAPI) {
 
 var screenfull$1 = screenfull;
 
-var Plugin = function Plugin() {
-  var selectionArray = function selectionArray(container, selectors) {
-    var selections = container.querySelectorAll(selectors);
-    var selectionarray = Array.prototype.slice.call(selections);
+const Plugin = () => {
+  const isObject = item => {
+    return item && typeof item === 'object' && !Array.isArray(item);
+  };
+
+  const mergeDeep = function (target) {
+    for (var _len = arguments.length, sources = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      sources[_key - 1] = arguments[_key];
+    }
+
+    if (!sources.length) return target;
+    const source = sources.shift();
+
+    if (isObject(target) && isObject(source)) {
+      for (const key in source) {
+        if (isObject(source[key])) {
+          if (!target[key]) Object.assign(target, {
+            [key]: {}
+          });
+          mergeDeep(target[key], source[key]);
+        } else {
+          Object.assign(target, {
+            [key]: source[key]
+          });
+        }
+      }
+    }
+
+    return mergeDeep(target, ...sources);
+  };
+
+  const selectionArray = function (container, selectors) {
+    let selections = container.querySelectorAll(selectors);
+    let selectionarray = Array.prototype.slice.call(selections);
     return selectionarray;
   };
 
-  var sfEnabled = function sfEnabled() {
-    if (screenfull$1.enabled || screenfull$1.isEnabled) {
-      return true;
+  const siblings = elem => {
+    let siblings = [];
+
+    if (!elem.parentNode) {
+      return siblings;
     }
 
-    return false;
+    let sibling = elem.parentNode.firstElementChild || elem.parentNode.firstChild;
+
+    while (sibling) {
+      if (sibling !== elem && sibling.nodeType === Node.ELEMENT_NODE) siblings.push(sibling);
+      sibling = sibling.nextElementSibling || sibling.nextSibling;
+    }
+
+    return siblings;
   };
 
-  var fullScreenEffects = function fullScreenEffects(deck, options) {
-    var viewport = deck.getRevealElement().tagName == "BODY" ? document : deck.getRevealElement();
-    var fsButtons = selectionArray(viewport, ".".concat(options.baseclass));
-    var toggleThese = selectionArray(document, "[data-fs-toggle]");
-    var prefix = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase()) ? '-moz-' : /webkit/.test(navigator.userAgent.toLowerCase()) ? '-webkit-' : /msie/.test(navigator.userAgent.toLowerCase()) ? '-ms-' : /opera/.test(navigator.userAgent.toLowerCase()) ? '-o-' : '';
-    var fsStyleSheet = document.createElement("style");
-    fsStyleSheet.type = "text/css";
-    fsStyleSheet.innerText = ":".concat(prefix, "full-screen {background: var(--r-background-color)}");
-    document.head.appendChild(fsStyleSheet);
-
-    var hideIfNoFS = function hideIfNoFS(fsButton) {
-      if (options.hideifnofs == true && !fsButton.hasAttribute("data-fs-gonext")) ; else {
-        fsButton.style.display = "inline-block";
-
-        fsButton.onclick = function () {
-          deck.next();
-        };
+  const fullScreenEffects = function (deck, options) {
+    const sfEnabled = function () {
+      if (options.debugfsdisabled) {
+        return false;
       }
+
+      if (typeof screenfull$1 !== "undefined") {
+        if (screenfull$1.enabled || screenfull$1.isEnabled) {
+          return true;
+        }
+
+        return false;
+      } else return false;
     };
 
-    var buttonCheck = function buttonCheck(fsButtons) {
-      fsButtons.filter(function (fsButton) {
-        fsButton.style.display = "inline-block";
+    if (options.compatibility) {
+      console.log("FsFx runs in compatibility mode. Please go to https://github.com/martinomagnifico/reveal.js-fsfx to check the recent changes. Compatibility mode can be turned off if you are sure that fullscreen buttons are displayed correctly.");
+    }
 
-        var goNext = function goNext() {
-          if (parseInt(fsButton.dataset.fsGonext) > 0 && !screenfull$1.isFullscreen) {
-            setTimeout(function () {
+    let viewport = deck.getRevealElement().tagName == "BODY" ? document : deck.getRevealElement();
+    let revealElement = deck.getRevealElement();
+    let slides = revealElement.querySelector(".slides");
+    revealElement.style.setProperty('--r-opposite-color', options.auto.oppositecolor);
+    revealElement.style.setProperty('--fsfx-color', options.auto.color);
+    let fsfxStyle = document.querySelector('[title="fsfxstyle"]');
+
+    if (typeof fsfxStyle == 'undefined' || fsfxStyle == null) {
+      let prefix = /mozilla/.test(navigator.userAgent.toLowerCase()) && !/webkit/.test(navigator.userAgent.toLowerCase()) ? '-moz-' : /webkit/.test(navigator.userAgent.toLowerCase()) ? '-webkit-' : /msie/.test(navigator.userAgent.toLowerCase()) ? '-ms-' : /opera/.test(navigator.userAgent.toLowerCase()) ? '-o-' : '';
+      fsfxStyle = document.createElement('style');
+      fsfxStyle.title = "fsfxstyle"; // style.appendChild(document.createTextNode('div {border: 1px solid red}'));
+
+      let fsfxcss = `:${prefix}full-screen {background: var(--r-background-color)}@font-face{font-family:'fsfx';src: url(data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAWcAAsAAAAABVAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDxEMrGNtYXAAAAFoAAAAXAAAAFwAaQDdZ2FzcAAAAcQAAAAIAAAACAAAABBnbHlmAAABzAAAAagAAAGol0gf52hlYWQAAAN0AAAANgAAADYevkEjaGhlYQAAA6wAAAAkAAAAJAfCA8dobXR4AAAD0AAAABgAAAAYDgAACmxvY2EAAAPoAAAADgAAAA4A/ACObWF4cAAAA/gAAAAgAAAAIAAJAENuYW1lAAAEGAAAAWIAAAFiTFMt/nBvc3QAAAV8AAAAIAAAACAAAwAAAAMDVQGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAC0DwP/AAEADwABAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAwAAAAMAAAAcAAEAAwAAABwAAwABAAAAHAAEAEAAAAAMAAgAAgAEAAEAIAArAC3//f//AAAAAAAgACsALf/9//8AAf/j/9n/2AADAAEAAAAAAAAAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAEAAAAAAAAAAAACAAA3OQEAAAAAAQAAAAAAAAAAAAIAADc5AQAAAAACAAD/wAQAA8AAHwBAAAABNjIXFhQHMQEhMhYfARQGIzEhIiY1MRE0NjMyFhUxEQEyFhUxERQGIyImNTERAQ4BLwEmNDcxASEiJi8BNDYzMQGCChwKCgr+wwECDhMBARQP/qsOFBQODhQDmg4UFA4OFP7DChkKBAoKAT3+/g4TAQEUDwFyCgoKHQr+wxENBA4UFA4BVQ8UFA/+/QOMFA7+qw8UFA8BAv7DCQEIAgodCgE9EQ0EDhQAAgAK/8cD9gO2AB8AQAAAATYyFxYUBzEBITIWFxUUBiMxISImNTERNDYzMhYVMREHMhYVMREUBiMiJjUxEQEOAS8BJjQ3MQEhIiYnNTQ2MzEDxgocCgoK/sMBAw0TAhQO/qoOFBQODhTuDhQUDg8U/sMJGgoDCgoBPf79DRMCFA4DtgoKChwK/sMSDQQOFBQOAVYOFBQO/v39FA7+qg4UFA4BA/7DCQIIAwocCgE9Eg0EDhQAAQAAAAEAAOz603dfDzz1AAsEAAAAAADdz35TAAAAAN3PflMAAP/ABAADwAAAAAgAAgAAAAAAAAABAAADwP/AAAAEAAAAAAAEAAABAAAAAAAAAAAAAAAAAAAABgQAAAAAAAAAAAAAAAIAAAAEAAAABAAACgAAAAAACgAUAB4AegDUAAAAAQAAAAYAQQACAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAQAAAABAAAAAAACAAcARQABAAAAAAADAAQALQABAAAAAAAEAAQAWgABAAAAAAAFAAsADAABAAAAAAAGAAQAOQABAAAAAAAKABoAZgADAAEECQABAAgABAADAAEECQACAA4ATAADAAEECQADAAgAMQADAAEECQAEAAgAXgADAAEECQAFABYAFwADAAEECQAGAAgAPQADAAEECQAKADQAgGZzZngAZgBzAGYAeFZlcnNpb24gMS4wAFYAZQByAHMAaQBvAG4AIAAxAC4AMGZzZngAZgBzAGYAeGZzZngAZgBzAGYAeFJlZ3VsYXIAUgBlAGcAdQBsAGEAcmZzZngAZgBzAGYAeEZvbnQgZ2VuZXJhdGVkIGJ5IEljb01vb24uAEYAbwBuAHQAIABnAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4ALgAAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format('woff');font-weight:normal;font-style:normal;}.icon-fs:after{font-family:'fsfx';content:'+';line-height:1;width:1em;height:1em;font-style:normal;font-weight:normal;font-variant:normal;text-transform:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.icon-fsexit:after{content:'-'}`;
+      fsfxStyle.appendChild(document.createTextNode(fsfxcss));
+      document.head.appendChild(fsfxStyle);
+    }
+
+    if (options.auto) {
+      if (options.auto.generate) {
+        let alreadyHasFsButton = false;
+        const slideSiblings = siblings(slides);
+        slideSiblings.forEach(slideSibling => {
+          if (slideSibling.classList.contains(options.baseclass) || slideSibling.querySelector(`.${options.baseclass}`)) {
+            alreadyHasFsButton = true;
+          }
+        });
+
+        if (!alreadyHasFsButton) {
+          let fsbtn = document.createElement('button');
+          fsbtn.className = `${options.baseclass} fsfxautobutton icon-fs`;
+          fsbtn.dataset.fsToggle = "icon-fsexit";
+          revealElement.insertBefore(fsbtn, revealElement.childNodes[0]);
+        }
+      }
+
+      if (options.auto.position) {
+        const autofsfxStyle = document.createElement('style');
+        let positions = {};
+        let thisid = ".reveal";
+
+        if (deck.getConfig().embedded == true) {
+          const generateID = () => {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+          };
+
+          let unid = "";
+          unid = deck.getRevealElement().id ? deck.getRevealElement().id : generateID();
+          thisid = "#" + unid + ".reveal";
+
+          if (!deck.getRevealElement().id) {
+            deck.getRevealElement().setAttribute("id", unid);
+          }
+        }
+
+        positions.top = options.auto.position.top ? options.auto.position.top : "auto";
+        positions.right = options.auto.position.right ? options.auto.position.right : "auto";
+        positions.bottom = options.auto.position.bottom ? options.auto.position.bottom : "auto";
+        positions.left = options.auto.position.left ? options.auto.position.left : "auto";
+        autofsfxStyle.innerHTML = `${thisid} .fsfxautobutton{display:inline-flex;border-radius:6px;text-decoration:none;cursor:pointer;text-align:center;appearance:none;-webkit-appearance:none;-moz-appearance:none;border:none;-webkit-transition:opacity .15s ease-in-out;-o-transition:opacity .15s ease-in-out;transition:opacity .15s ease-in-out;margin:0;padding:0; font-size:1rem;line-height: 1;z-index:2;position:absolute;z-index:2;border-width: 1.5px;border-style: solid;background: none;color: var(--fsfx-color, --r-main-color);font-size:1rem;font-size: clamp(1rem, 1vw + 1rem, 2rem);padding: 6px;opacity: 0.5;top: ${positions.top}; left: ${positions.left}; bottom: ${positions.bottom}; right: ${positions.right}}${thisid} .fsfxautobutton:hover {opacity: 1;}${thisid}.has-light-background .fsfxautobutton {color: var(--r-opposite-color, #000);}${thisid}.has-dark-background .fsfxautobutton {color: var(--r-main-inverse-color, #fff)}${thisid}.no-fsfx-button .fsfxautobutton {${options.nofsfxCss}}`;
+        document.head.appendChild(autofsfxStyle);
+      }
+    }
+
+    let fsButtons = revealElement.querySelectorAll(`.${options.baseclass}`);
+    let toggleThese = selectionArray(document, "[data-fs-toggle]");
+    fsButtons.forEach(fsButton => {
+      let hidebutton = true;
+
+      if (options.compatibility) {
+        if (fsButton.id != "fsfxautobutton") {
+          fsButton.style.display = "inline-block";
+        }
+      }
+
+      if (options.hideifnofs == false || fsButton.dataset.fsGonext) {
+        hidebutton = false;
+      }
+
+      if (!sfEnabled() && hidebutton) {
+        fsButton.style.cssText += "pointer-events: none";
+        let nofsfxCss = fsButton.dataset.nofsfxCss || options.nofsfxCss || '';
+        fsButton.style.cssText += nofsfxCss;
+      }
+
+      fsButton.onclick = function () {
+        if (fsButton.dataset.fsGonext && fsButton.dataset.fsGonext > 0) {
+          if (screenfull$1.isFullscreen || !sfEnabled()) {
+            deck.next();
+          } else {
+            screenfull$1.request(viewport).then(setTimeout(function () {
               deck.next();
-            }, parseInt(fsButton.dataset.fsGonext));
-          } else {
-            deck.next();
+            }, parseInt(fsButton.dataset.fsGonext)));
           }
-        };
+        } else {
+          screenfull$1.toggle(viewport);
+        }
+      };
+    });
 
-        fsButton.onclick = function () {
-          if (sfEnabled() == true) {
-            if (fsButton.hasAttribute("data-fs-gonext")) {
-              if (screenfull$1.isFullscreen) {
-                goNext();
-              } else {
-                screenfull$1.request(viewport).then(goNext());
-              }
-            } else {
-              screenfull$1.toggle(viewport);
-            }
-          } else {
-            deck.next();
-          }
-        };
-      });
-    };
-
-    var toggleCheck = function toggleCheck(toggleThese) {
-      var fullscreenchange = function fullscreenchange() {
+    const toggleCheck = function (toggleThese) {
+      const fullscreenchange = function () {
         if (screenfull$1.isFullscreen) {
           toggleThese.filter(function (toggleThis) {
             toggleThis.classList.add(toggleThis.dataset.fsToggle);
@@ -368,13 +333,8 @@ var Plugin = function Plugin() {
     if (!sfEnabled()) {
       console.log("The browser does not support the Fullscreen API.");
       document.body.classList.add("no-fsfx");
-      fsButtons.filter(function (fsButton) {
-        hideIfNoFS(fsButton);
-      });
     } else {
-      if (fsButtons.length > 0) {
-        buttonCheck(fsButtons);
-      } else {
+      if (!fsButtons.length) {
         console.log("There are no FS buttons");
       }
 
@@ -386,22 +346,25 @@ var Plugin = function Plugin() {
     }
   };
 
-  var init = function init(deck) {
-    var defaultOptions = {
+  const init = function (deck) {
+    let defaultOptions = {
       baseclass: 'fsbutton',
-      hideifnofs: true
-    };
-
-    var defaults = function defaults(options, defaultOptions) {
-      for (var i in defaultOptions) {
-        if (!options.hasOwnProperty(i)) {
-          options[i] = defaultOptions[i];
+      hideifnofs: true,
+      nofsfxCss: 'display: none;',
+      compatibility: true,
+      auto: {
+        generate: true,
+        color: 'var(--r-main-color)',
+        oppositecolor: 'black',
+        position: {
+          right: '20px',
+          top: '20px'
         }
-      }
+      },
+      debugfsdisabled: false
     };
-
-    var options = deck.getConfig().fsfx || {};
-    defaults(options, defaultOptions);
+    let options = deck.getConfig().fsfx || {};
+    options = mergeDeep(defaultOptions, options);
     fullScreenEffects(deck, options);
   };
 

@@ -215,4 +215,4 @@ And if you want to show off what you made with it, please do :-)
 ## License
 MIT licensed
 
-Copyright (C) 2022 Martijn De Jongh (Martino)
+Copyright (C) 2023 Martijn De Jongh (Martino)

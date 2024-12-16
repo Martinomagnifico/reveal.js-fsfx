@@ -123,7 +123,14 @@ Reveal.initialize({
 * **`auto`**: Since FsFx 1.2.0, you can auto-generate a fullscreen button which is visible on every slide. See "[auto mode](#optional-auto-mode)" section below.
 	* **`color`**: Reveal.js uses a variable called `--r-main-color`. This is the color for the text in the slides, and depends on the setting of this color in the theme. FsFx uses this main color by default for the auto-generated button, but it can be overruled with any CSS color. 
 	* **`oppositecolor`**: When a slide has a background that is an inverted version of the regular background, the text in the slide should be inverted as well. Reveal.js does not change that main variable (becaue it would result in color changes during transitions), but sets a specific opposite color depending on the theme, inside the slides. Because we also want to target elements outside the slides, FsFx uses the `oppositecolor` option to create a variable called `--r-opposite-color`. This variable is then used in the auto-generated button, but it can also be used elsewhere.
-	* **`position`**: This sets the position of the auto-generated button. You can also use `left` and `bottom` if needed.
+	* **`position`**: This sets the position of the auto-generated button. You can also use `left` and `bottom` if needed. For example if you want the button to appear bottom right use ( you have to use null for the values you aren't using)
+```js position: {
+            top: 'null',
+            bottom: '20px',
+            left: 'null',
+            right: '20px',
+          }
+```
 * **`debugfsdisabled `**: If you're designing a presentation, and want to know what it looks like if there is no Fullscreen API support, set this to true. 
 
 

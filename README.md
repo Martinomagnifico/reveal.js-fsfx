@@ -15,7 +15,8 @@ FsFx.js does multiple things:
 
 * It sets a class for buttons that should switch the browser to fullscreen or exit it. On unsupported devices, these buttons get configurable styling.
 * Optional: It allows a fullscreen-button to also let Reveal.js go to the next slide, and set an optional delay for it. 
-* Optional: It looks for elements in the presentation that need to have a class toggled on entering fullscreen and sets that class; it will remove the class on exiting fullscreen. The class can be set per element. Nice for an icon on the fullscreen button itself.
+* Optional: It looks for elements in the presentation that need to have a class toggled on entering fullscreen and sets that class; it will remove the class on exiting fullscreen. The class can be set per element. Nice for an icon on the fullscreen button itself. 
+* The Reveal DOM element will toggle the `fullscreen` class by default, this is because it can not be controlled from within child slides, and thus takes environments like Quarto into account.
 * Optional: in auto-mode, it is possible to auto-generate a single fullscreen button that is visible on all slides. The styling copies the style of the demo.
 
 

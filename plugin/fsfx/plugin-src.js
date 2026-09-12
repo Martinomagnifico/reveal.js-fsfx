@@ -184,11 +184,13 @@ const Plugin = () => {
 
 			const fullscreenchange = function () {
 				if (screenfull.isFullscreen) {
+					deck.getRevealElement().classList.add('fullscreen');
 					toggleThese.filter(function (toggleThis) {
 						toggleThis.classList.add(toggleThis.dataset.fsToggle);
 					});
 				}
 				if (!screenfull.isFullscreen) {
+					deck.getRevealElement().classList.remove('fullscreen');
 					toggleThese.filter(function (toggleThis) {
 						toggleThis.classList.remove(toggleThis.dataset.fsToggle);
 					});

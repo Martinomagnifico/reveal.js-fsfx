@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <div class="reveal" data-fs-toggle="fullscreen">
+    <div class="reveal">
         <div class="slides">
             <section class="center" data-transition="fade">
                 <h1>FsFx</h1>
@@ -54,8 +54,9 @@
             <section class="center">
                 <h4>3. Toggle a class on any element if the presentation is fullscreen</h4>
                 <ul>
-                    <li>A class toggle can be added with a <code>data-fs-toggle="*"</code> attribute</li>
+                    <li>A class toggle can be added with <code>data-fs-toggle="*"</code></li>
                     <li>The wildcard is the class that is toggled in fullscreen</li>
+                    <li>The Reveal DOM element gets the <code>fullscreen</code> class</li>
                     <li class="fsfx-enabled">In this presentation, see the changes in fullscreen: The background and the button icons</li>
                 </ul>
                 <button class="bigbutton fsbutton icon-fs" data-fs-toggle="icon-fsexit">Toggle Fullscreen</button>

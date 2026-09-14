@@ -1,0 +1,45 @@
+// The demo's own fullscreen buttons, the ones written into the slides. The
+// button FsFx generates is styled by the plugin's own stylesheet instead.
+
+.bigbutton {
+	display: inline-flex;
+	align-items: center;
+	margin: 1em;
+	padding: 0.5em 0.6em;
+	border: none;
+	border-radius: 0.25em;
+	background: var(--r-main-color);
+	// Text on a fill painted in the theme's own text colour, so the background
+	// colour is what reads against it.
+	color: var(--r-background-color, black);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+	font-size: clamp(1rem, 1vw + 1rem, 2rem);
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	appearance: none;
+
+	transition:
+		opacity 0.5s ease-in-out,
+		color 0.15s ease-in-out;
+}
+
+// The icon sits after the label, so it needs air the generated button does not.
+.slides .bigbutton .fsfx-icon {
+	margin-inline-start: 12px;
+}
+
+// What fullscreen looks like in this deck: the background turns, and the
+// buttons turn with it. `.fullscreen` is set by FsFx on the deck itself.
+.reveal.fullscreen .bigbutton {
+	color: DarkSlateGray;
+}
+
+.reveal .backgrounds {
+	transition: background-color 3s cubic-bezier(0.26, 0.86, 0.44, 0.985) !important;
+}
+
+.reveal.fullscreen .backgrounds {
+	background: DarkSlateGray;
+}

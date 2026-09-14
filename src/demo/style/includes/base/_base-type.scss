@@ -1,0 +1,33 @@
+// TYPOGRAPHY
+
+.reveal pre {
+	font-size: calc(0.5 * var(--r-main-font-size));
+}
+
+
+.small, .reveal small {
+	font-size: calc(0.7 * var(--r-main-font-size));
+	code {
+		font-size: 0.7em;
+	}
+}
+p, ul li {
+	code {
+		font-size: 0.7em;
+	}
+}
+
+i {
+	font-style: italic;
+}
+
+.slides {
+
+	p a,
+	ol li a,
+	ul li a {
+		text-decoration: underline;
+		  text-underline-offset: 0.15em;
+	}
+
+}

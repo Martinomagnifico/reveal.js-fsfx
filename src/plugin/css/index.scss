@@ -1,0 +1,142 @@
+:root {
+	--cssimported-fsfx: true;
+}
+
+// The icons FsFx puts at the end of every `.icon-fs` element: both of them, with
+// one shown. The exit icon shows while the element has `icon-fsexit`, which
+// `data-fs-toggle="icon-fsexit"` switches with fullscreen. The default icons are
+// drawn in `currentColor`, so an icon is the colour of the element it is in.
+// Nothing here sets `fill` or `stroke`: that is up to the SVG, and a line icon
+// must not be filled.
+.fsfx-icon {
+	display: inline-block;
+	flex: none;
+	width: 1em;
+	height: 1em;
+	vertical-align: -0.125em;
+}
+
+// The line width of FsFx's own icons, in the units of their 24 by 24 drawing.
+// Not for icons a deck supplies: those keep the width they were drawn with.
+.fsfx-icon-default {
+	stroke-width: var(--fsfx-icon-stroke-width, 1.5);
+}
+
+.fsfx-icon-exit,
+.icon-fsexit > .fsfx-icon-enter {
+	display: none;
+}
+
+.icon-fsexit > .fsfx-icon-exit {
+	display: inline-block;
+}
+
+// A button the deck wrote itself gets no colour of its own: inside a Simplemenu
+// bar it should be the colour of that bar, including one the deck overrode
+// there. Inheriting has to be asked for, though — a browser gives `button` its
+// own `color`, which would otherwise leave it black inside a white bar.
+//
+// The icon is centred the same way: as a flex item it has no line box around it,
+// so the button is as tall as the icon and its padding, whatever the font or
+// `line-height` it inherits, and the icon stays in the middle when a deck gives
+// the button a size of its own. This covers the generated button as well.
+//
+// `:where()` so this carries no specificity at all: it beats the browser's
+// default, because an author stylesheet does, and loses to any rule the deck
+// writes for its own buttons. The `display` FsFx writes inline, in compatibility
+// mode or for a browser without fullscreen, still wins.
+:where(.fsfx-button) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: inherit;
+}
+
+// A fullscreen element is painted on the browser's own backdrop, which is black
+// by default and shows at the edges of a deck that does not fill the screen.
+// Two rules rather than a selector list: a browser drops the whole list if it
+// does not know one of the selectors in it.
+:fullscreen {
+	background: var(--fsfx-background, var(--r-background-color));
+}
+
+:-webkit-full-screen {
+	background: var(--fsfx-background, var(--r-background-color));
+}
+
+// The generated button. Its colours and its corner come from custom properties
+// that the plugin sets on the deck, so the configuration reaches it without a
+// stylesheet being written from JavaScript.
+//
+// It sits in a zero-height anchor from the toolkit, which holds the top or bottom
+// edge of what the reader sees in every view: the window for a deck that has the
+// page to itself, the deck's own box when embedded, and in scroll view too. So
+// the button is only placed against the anchor. The anchor also carries the
+// z-index, from `--fsfx-z`.
+.fsfxautobutton {
+	position: absolute;
+	top: var(--fsfx-top, auto);
+	right: var(--fsfx-right, auto);
+	bottom: var(--fsfx-bottom, auto);
+	left: var(--fsfx-left, auto);
+
+	margin: 0;
+	padding: var(--fsfx-padding, 6px);
+	border: var(--fsfx-border-width, 1.5px) solid currentColor;
+	border-radius: var(--fsfx-radius, 6px);
+	background: none;
+	// `--c-theme-color` is published by the toolkit, measured off the theme and
+	// kept matched to the slide on screen. `--fsfx-color` is only set when the
+	// deck names a colour of its own.
+	color: var(--fsfx-color, var(--c-theme-color, currentColor));
+
+	font-size: var(--fsfx-font-size, clamp(1rem, 1vw + 1rem, 2rem));
+
+	// The default size in whole pixels, so the button and its icon do not sit on
+	// half pixels. Only the default: a size the deck sets is used as it is.
+	@supports (width: round(1.5px, 1px)) {
+		font-size: var(--fsfx-font-size, round(clamp(1rem, 1vw + 1rem, 2rem), 1px));
+	}
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	appearance: none;
+
+	opacity: var(--fsfx-opacity, 0.5);
+	transition: opacity var(--fsfx-duration, 0.15s) var(--fsfx-easing, ease-in-out);
+	// Safari moves an element onto a layer of its own while its opacity changes,
+	// snapped to whole device pixels, and back again after: the icon shifts half a
+	// pixel as the hover starts and ends. On a layer of its own all along, it stays.
+	will-change: opacity;
+
+	&:hover,
+	&:focus-visible {
+		opacity: var(--fsfx-opacity-hover, 1);
+	}
+}
+
+// A zero-height anchor has one edge to measure from: `top` in a top anchor,
+// `bottom` in a bottom one. FsFx picks the bottom anchor only when the position
+// names a bottom and no top.
+[data-toolkit-anchor="top"] > .fsfxautobutton {
+	bottom: auto;
+}
+
+[data-toolkit-anchor="bottom"] > .fsfxautobutton {
+	top: auto;
+}
+
+// A slide whose background contrasts the theme's own. `--c-theme-color` has
+// already turned around by the time this matches, so the button follows without
+// anything more; this rule is only here so a deck can name a colour for that
+// case alone, without having to know which way round its own theme is.
+.c-theme-inverted .fsfxautobutton {
+	color: var(--fsfx-inverse-color, var(--c-theme-color, currentColor));
+}
+
+// Printing puts every slide on the page at once, and a button that cannot be
+// clicked on paper should not be on all of them.
+.print-pdf .fsfxautobutton {
+	display: none;
+}

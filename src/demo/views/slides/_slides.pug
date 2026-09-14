@@ -1,0 +1,47 @@
+section.center(data-transition="fade")
+	h1 FsFx
+	h3 for Reveal.js
+	button.bigbutton.fsbutton(data-fs-gonext="1500") Start the show!
+	.fsfx-disabled
+		p.warning Note: this device does not support the Fullscreen API.
+
+section.center(data-transition="zoom-in fade-out")
+	h3 FsFx.js
+	p.small Can do a few things:
+	ol
+		li Enter or exit fullscreen
+		li Trigger 'next slide' after fullscreen
+		li Toggle a class on any element if fullscreen
+		li Auto-generate a fullscreen button
+	p.small If a device does not support the Fullscreen API, a class of <code>no-fsfx</code> is added to the body. Use it to show warnings, hide elements, and so on.
+
+section.center
+	h4 1. Enter or exit fullscreen
+	ul
+		li Triggers if an element with a certain class is clicked
+		li This baseclass is <code>fsbutton</code> by default
+		li The baseclass can be changed in the plugin options
+
+section.center
+	h4 2. Trigger 'next slide' after fullscreen
+	p.small The start button on the first slide of this deck does exactly that
+	ul
+		li If wanted, a 'next slide' function can be called
+		li It can be added with a <code>data-fs-gonext="*"</code> attribute
+		li The wildcard is the delay in milliseconds
+
+section.center
+	h4 3. Toggle a class on any element in fullscreen
+	ul
+		li A class toggle can be added with <code>data-fs-toggle="*"</code>
+		li The wildcard is the class that is toggled in fullscreen
+		li The Reveal element always gets the <code>fullscreen</code> class
+		li.fsfx-enabled In this presentation, see the changes in fullscreen: the background and the button icons
+	button.bigbutton.fsbutton.icon-fs(data-fs-toggle="icon-fsexit") Toggle fullscreen
+
+section.center(data-background="white")
+	h4 4. Auto-generate a fullscreen button
+	ul
+		li FsFx can generate a fullscreen button in your presentation <span class="fsfx-enabled">(like in this one, top right)</span>
+		li This is only done if no such button exists outside the slides
+		li The styling is included; colour and position can be tweaked

@@ -1,0 +1,107 @@
+ /*****************************************************************
+ *
+ * reveal.js-fsfx for Reveal.js 
+ * Version 1.3.0
+ * 
+ * @link
+ * https://github.com/martinomagnifico/reveal.js-fsfx
+ * 
+ * @author: Martijn De Jongh (Martino), martijn.de.jongh@gmail.com
+ * https://github.com/martinomagnifico
+ *
+ * @license 
+ * MIT
+ * 
+ * Copyright (C) 2026 Martijn De Jongh (Martino)
+ *
+ ******************************************************************/
+
+
+:root {
+  --cssimported-fsfx: true;
+}
+
+.fsfx-icon {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
+}
+
+.fsfx-icon-default {
+  stroke-width: var(--fsfx-icon-stroke-width, 1.5);
+}
+
+.fsfx-icon-exit,
+.icon-fsexit > .fsfx-icon-enter {
+  display: none;
+}
+
+.icon-fsexit > .fsfx-icon-exit {
+  display: inline-block;
+}
+
+:where(.fsfx-button) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+:fullscreen {
+  background: var(--fsfx-background, var(--r-background-color));
+}
+
+:-webkit-full-screen {
+  background: var(--fsfx-background, var(--r-background-color));
+}
+
+.fsfxautobutton {
+  position: absolute;
+  top: var(--fsfx-top, auto);
+  right: var(--fsfx-right, auto);
+  bottom: var(--fsfx-bottom, auto);
+  left: var(--fsfx-left, auto);
+  margin: 0;
+  padding: var(--fsfx-padding, 6px);
+  border: var(--fsfx-border-width, 1.5px) solid currentColor;
+  border-radius: var(--fsfx-radius, 6px);
+  background: none;
+  color: var(--fsfx-color, var(--c-theme-color, currentColor));
+  font-size: var(--fsfx-font-size, clamp(1rem, 1vw + 1rem, 2rem));
+}
+@supports (width: round(1.5px, 1px)) {
+  .fsfxautobutton {
+    font-size: var(--fsfx-font-size, round(clamp(1rem, 1vw + 1rem, 2rem), 1px));
+  }
+}
+.fsfxautobutton {
+  line-height: 1;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  opacity: var(--fsfx-opacity, 0.5);
+  transition: opacity var(--fsfx-duration, 0.15s) var(--fsfx-easing, ease-in-out);
+  will-change: opacity;
+}
+.fsfxautobutton:hover, .fsfxautobutton:focus-visible {
+  opacity: var(--fsfx-opacity-hover, 1);
+}
+
+[data-toolkit-anchor=top] > .fsfxautobutton {
+  bottom: auto;
+}
+
+[data-toolkit-anchor=bottom] > .fsfxautobutton {
+  top: auto;
+}
+
+.c-theme-inverted .fsfxautobutton {
+  color: var(--fsfx-inverse-color, var(--c-theme-color, currentColor));
+}
+
+.print-pdf .fsfxautobutton {
+  display: none;
+}

@@ -2,13 +2,13 @@
 
 [![Version](https://img.shields.io/npm/v/reveal.js-fsfx)](#) [![Downloads](https://img.shields.io/npm/dt/reveal.js-fsfx)](https://github.com/Martinomagnifico/reveal.js-fsfx/archive/refs/heads/master.zip)
 
-A plugin for [Reveal.js](https://revealjs.com) 4, that enters or exits fullscreen, and toggles classes on certain elements.
+A plugin for [Reveal.js](https://revealjs.com), that enters or exits fullscreen, and toggles classes on certain elements.
 
-[![Screenshot](https://martinomagnifico.github.io/reveal.js-fsfx/screenshot.png)](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html)
+[![Screenshot](https://martinomagnifico.github.io/reveal.js-fsfx/screenshot.png)](https://martinomagnifico.github.io/reveal.js-fsfx/demo/demo.html)
 
 Sometimes you would like to have a button that starts a presentation *and* goes fullscreen at the same time. This plugin does just that. And some other things.  
 
-Here's a [demo](https://martinomagnifico.github.io/reveal.js-fsfx/demo.html) of a project that uses the FsFx.js plugin.
+Here's a [demo](https://martinomagnifico.github.io/reveal.js-fsfx/demo/demo.html) of a project that uses the FsFx.js plugin, and an [embedded demo](https://martinomagnifico.github.io/reveal.js-fsfx/demo/demo-embed.html) with two decks on one page.
 
 
 FsFx.js does multiple things:
@@ -16,7 +16,7 @@ FsFx.js does multiple things:
 * It sets a class for buttons that should switch the browser to fullscreen or exit it. On unsupported devices, these buttons get configurable styling.
 * Optional: It allows a fullscreen-button to also let Reveal.js go to the next slide, and set an optional delay for it. 
 * Optional: It looks for elements in the presentation that need to have a class toggled on entering fullscreen and sets that class; it will remove the class on exiting fullscreen. The class can be set per element. Nice for an icon on the fullscreen button itself. 
-* The Reveal DOM element will toggle the `fullscreen` class by default, this is because it can not be controlled from within child slides, and thus takes environments like Quarto into account.
+* The Reveal DOM element always gets a `fullscreen` class in fullscreen, whether or not anything else is set to toggle. A slide cannot reach outside itself to add an attribute to that element, so generated decks — Quarto, for one — have no other way to style the fullscreen state.
 * Optional: in auto-mode, it is possible to auto-generate a single fullscreen button that is visible on all slides. The styling copies the style of the demo.
 
 
@@ -57,7 +57,7 @@ The FsFx plugin folder can then be referenced from `node_modules/reveal.js-fsfx/
 
 ### JavaScript
 
-There are two JavaScript files for FsFx, a regular one, `fsfx.js`, and a module one, `fsfx.esm.js`. You only need one of them:
+There are two JavaScript files for FsFx, a regular one, `fsfx.js`, and a module one, `fsfx.mjs`. You only need one of them. (The older name `fsfx.esm.js` still works: it re-exports `fsfx.mjs`, so decks that load it by path keep running.)
 
 
 #### Regular 
@@ -81,13 +81,34 @@ If you're using ES modules, you can add it like this:
 <script type="module">
     // This will need a server
     import Reveal from './dist/reveal.esm.js';
-    import FsFx from './plugin/fsfx/fsfx.esm.js';
+    import FsFx from './plugin/fsfx/fsfx.mjs';
     Reveal.initialize({
         // ...
         plugins: [ FsFx ]
     });
 </script>
 ```
+
+### CSS
+
+FsFx ships a stylesheet, `fsfx.css`, which holds the icon font, the background of a fullscreen element, and the styling of the auto-generated button. Earlier versions wrote all of that into a `<style>` tag from JavaScript; it is a real file now, so your own CSS can override it.
+
+You do not have to link it yourself. FsFx loads it from beside its own script, which works for both of the installations above. If you keep your stylesheets somewhere else, point at it:
+
+```javascript
+fsfx: {
+    csspath: 'css/fsfx.css'
+}
+```
+
+And if you would rather bundle it yourself, or import it in your own build, switch the loading off:
+
+```javascript
+fsfx: {
+    cssautoload: false
+}
+```
+
 
 ## Configuration
 
@@ -101,16 +122,22 @@ Reveal.initialize({
         hideifnofs: true,
         nofsfxCss: 'display: none;',
         compatibility: true,
+        cssautoload: true,
+        csspath: '',
         auto: {
             generate: true,
-            color: 'var(--r-main-color)',
-            oppositecolor: 'black',
+            color: '',
+            oppositecolor: '',
             position: {
                 right: '20px',
                 top: '20px'
             }
         },
-        debugfsdisabled: false
+        debugfsdisabled: false,
+        icons: {
+            enter: '<svg ...>...</svg>',
+            exit: '<svg ...>...</svg>'
+        }
     },
     plugins: [ FsFx ]
 });
@@ -121,11 +148,14 @@ Reveal.initialize({
 * **`hideifnofs`**: Hide any fullscreen button if the fullscreen API is not supported. See [Unsupported browsers](#unsupported-browsers) section below. 
 * **`nofsfxCss`**: *How* to hide any buttons that are hidden with the above setting, which applies one or multiple CSS rules. This can also be set per element with a data-attribute. See [Unsupported browsers](#unsupported-browsers) section below.
 * **`compatibility`**: Older versions of FsFx rely on the user setting `display:none` in their CSS. If this is still the case in your styling, please remove that; then you can set `compatibility` to `false`.
+* **`cssautoload`**: Whether FsFx loads its own stylesheet. See the [CSS](#css) section above.
+* **`csspath`**: Where that stylesheet is, if it is not beside the plugin's script.
 * **`auto`**: Since FsFx 1.2.0, you can auto-generate a fullscreen button which is visible on every slide. See "[auto mode](#optional-auto-mode)" section below.
-	* **`color`**: Reveal.js uses a variable called `--r-main-color`. This is the color for the text in the slides, and depends on the setting of this color in the theme. FsFx uses this main color by default for the auto-generated button, but it can be overruled with any CSS color. 
-	* **`oppositecolor`**: When a slide has a background that is an inverted version of the regular background, the text in the slide should be inverted as well. Reveal.js does not change that main variable (becaue it would result in color changes during transitions), but sets a specific opposite color depending on the theme, inside the slides. Because we also want to target elements outside the slides, FsFx uses the `oppositecolor` option to create a variable called `--r-opposite-color`. This variable is then used in the auto-generated button, but it can also be used elsewhere.
-	* **`position`**: This sets the position of the auto-generated button. You can also use `left` and `bottom` if needed.
+	* **`color`**: The auto-generated button takes its color from the theme, and needs no setting. Give this one any CSS color to overrule that.
+	* **`oppositecolor`**: The same, for a slide whose background contrasts the theme — a white slide in a dark deck, say. The button already turns around on such a slide by itself; this is only for naming a color for that case.
+	* **`position`**: This sets the position of the auto-generated button. You can also use `left` and `bottom` if needed. A position you set replaces the default one, so `{ bottom: '20px', left: '20px' }` puts the button in the bottom left corner. The button stays in that corner of what the reader sees in every view: the window, the box of an embedded deck, and in scroll view.
 * **`debugfsdisabled `**: If you're designing a presentation, and want to know what it looks like if there is no Fullscreen API support, set this to true. 
+* **`icons`**: The two icons, as SVG markup: `enter` is shown outside fullscreen, `exit` in fullscreen. See [Included icons](#included-icons) below.
 
 
 ## HTML
@@ -164,25 +194,73 @@ Add a `data-fs-toggle` attribute to any element. This adds that toggle-class to 
 <p data-fs-toggle="hide">I have the class 'hide' in fullscreen</p>
 ```
 
+You do not need this for the deck itself. The Reveal element gets a `fullscreen` class of its own, always, so this works without any attribute being set anywhere:
+
+```css
+.reveal.fullscreen .mything {
+    /* Only in fullscreen */
+}
+```
+
 ## Styling
 
 ### Auto styling
-If you let FsFx generate a fullscreen button (see "[auto mode](#optional-auto-mode)" section above), the styling for that is already included. 
+If you let FsFx generate a fullscreen button (see "[auto mode](#optional-auto-mode)" section above), the styling for that is already included.
+
+Its color comes from the theme, and follows the slide: on a slide whose background contrasts the theme — a white slide in a dark deck — the button turns around with it. Nothing needs to be configured for that. FsFx reads the theme through the shared plugin toolkit, which publishes `--c-theme-color` and adds a `c-theme-inverted` class on such slides, so your own styling can follow the same two:
+
+```css
+.myelement {
+    color: var(--c-theme-color, currentColor);
+}
+```
+
+If you want the button to be a specific color instead, set `color` and, for contrasting slides, `oppositecolor` in the auto options. 
 
 ### Manual styling
 If you have other fullscreen buttons in your presentation, you should add the styling of the fullscreen buttons yourself, to fit in with the rest.
 
+Color is the exception, because it usually wants to come from whatever the button sits in. A button in a [Simplemenu](https://github.com/Martinomagnifico/reveal.js-simplemenu) bar should be the color of that bar, including a color you set on the bar yourself. A browser gives every `button` a color of its own, which would leave it black inside a light bar, so FsFx adds a class of `fsfx-button` to each button it wires and lets it inherit instead.
+
+The same class centres the icon: the button is an `inline-flex` box with its icon in the middle, so it is as tall as the icon and its padding, whatever font or line height it sits in, and a button beside it with an icon of the same size lines up.
+
+That rule carries no weight of its own: any color or `display` you set on your own buttons wins over it, and it only ever replaces the browser's default.
+
+```css
+/* Your rule wins. */
+.fsbutton {
+    color: cornflowerblue;
+}
+```
+
 ### Included icons
-FsFx includes two icons that indicate entering or exiting full screen, see the screenshot above. 
+FsFx includes two line icons, one for entering fullscreen and one for leaving it. They are SVG, drawn in `currentColor`, so an icon has the colour of the button it is in, including a button in a Simplemenu bar.
 
 * In auto-mode, they are already included in the generated button. 
-* In manual mode, they can be added to your buttons with the class `icon-fs`. To make sure that this icon toggles with the toggle functionality, add the `data-fs-toggle="icon-fsexit"` to it as well, like this:
+* In manual mode, they can be added to your buttons with the class `icon-fs`. FsFx puts both icons at the end of the button and shows one. To make sure that the icon toggles with the toggle functionality, add the `data-fs-toggle="icon-fsexit"` to it as well, like this:
 
 ```html
 <button class="fsbutton icon-fs" data-fs-toggle="icon-fsexit">Start the show!</button>
 ```
 
+The line width of the included icons is `1.5`, in their 24 by 24 drawing. Set `--fsfx-icon-stroke-width` to change it:
 
+```css
+:root {
+    --fsfx-icon-stroke-width: 2;
+}
+```
+
+To use your own icons, give their SVG markup in the configuration. Use `currentColor` in them to keep following the button's colour. Scripts and event attributes are removed, and the icons are sized to the button's text. Your icons keep their own line width; `--fsfx-icon-stroke-width` is for the included ones.
+
+```javascript
+fsfx: {
+    icons: {
+        enter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">...</svg>',
+        exit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">...</svg>'
+    }
+}
+```
 
 
 ## Unsupported browsers
@@ -216,4 +294,4 @@ And if you want to show off what you made with it, please do :-)
 ## License
 MIT licensed
 
-Copyright (C) 2023 Martijn De Jongh (Martino)
+Copyright (C) 2026 Martijn De Jongh (Martino)

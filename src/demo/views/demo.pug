@@ -1,0 +1,37 @@
+extends templates/layouts/_reveal.pug
+
+append variables
+	- presentation.title = presentation.title
+
+block slides
+	include slides/_slides
+
+block beforeslides
+	+badge(plugin.name.toLowerCase())
+
+block append scripts
+	if process.env.NODE_ENV === 'production'
+		script(src=`plugin/${plugin.name}/${plugin.name}.js`)
+		script.
+			Reveal.initialize({
+				transition: "slide",
+				history: true,
+				plugins: [ FsFx ],
+				fsfx: {
+					compatibility: false
+				}
+			});
+	else
+		script(type="module").
+			import "/src/plugin/css/index.scss";
+			import FsFx from '@/plugin/js/index';
+			Reveal.initialize({
+				transition: "slide",
+				history: true,
+				plugins: [ FsFx ],
+				fsfx: {
+					compatibility: false,
+					cssautoload: false,
+					debug: true
+				}
+			});

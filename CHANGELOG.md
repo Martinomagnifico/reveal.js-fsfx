@@ -1,5 +1,27 @@
 # Changelog
 
+## [1.3.0] - 2026-09-14
+
+### Fixed
+- Auto-button stays in place in scroll view and embedded decks.
+- `no-fsfx-button` also hides the auto-button in scroll view.
+- Buttons inside slides work again after scroll view.
+- Buttons added later by other plugins get their icons and colour.
+- With several decks, only the deck in fullscreen gets its fullscreen classes.
+- A custom `position` replaces the default one.
+- The auto-button no longer shifts half a pixel on hover in Safari.
+
+### Added
+- `icons` option for your own SVG icons.
+- `--fsfx-icon-stroke-width` for the line width of the icons.
+- Embedded demo.
+
+### Changed
+- `--fsfx-z` now sets the z-index of the button's anchor.
+- Icons are line SVGs in `currentColor` instead of a webfont.
+- The old default `auto` colours now follow the theme.
+- Every fullscreen button centres its icon.
+
 ## [1.2.0] - 2023-02-04
 
 ### Breaking changes

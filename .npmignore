@@ -1,0 +1,15 @@
+node_modules/
+docs/
+src/
+
+.git
+.gitignore
+.npmignore
+.env.local
+.claude
+CLAUDE.md
+vite.config.js
+vite.config.docs.js
+tsconfig.json
+tsconfig.base.json
+package-lock.json
